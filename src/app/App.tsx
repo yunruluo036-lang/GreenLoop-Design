@@ -63,7 +63,6 @@ const T = {
 type Lang = "en" | "de";
 
 const GREENLOOP_LOGO_SRC = "/greenloop-logo.png";
-const BAYREUTH_MAP_SRC = "/maps/map.png";
 
 function GreenLoopLogo({ className = "" }: { className?: string }) {
   return (
@@ -704,8 +703,8 @@ function ScreenMap({ lang }: { lang: Lang }) {
       <div className="flex flex-col h-full relative">
         {/* Map canvas */}
         <div className="absolute inset-0">
-          <ImageWithFallback
-            src={BAYREUTH_MAP_SRC}
+          <img
+            src="/maps/map.png"
             alt="Bayreuth map"
             className="w-full h-full object-cover object-center"
           />
@@ -1062,7 +1061,7 @@ function ScreenBusinessProfile({ lang }: { lang: Lang }) {
 
           {/* Map mini */}
           <div className="rounded-2xl overflow-hidden mb-4" style={{ height: 80, background: "#E8F0EB", position: "relative" }}>
-            <ImageWithFallback src={BAYREUTH_MAP_SRC} alt="Bayreuth map" className="w-full h-full object-cover" />
+            <img src="/maps/map.png" alt="Bayreuth map" className="w-full h-full object-cover" />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 rounded-xl bg-[#0F6B3E] flex items-center justify-center shadow-lg">
                 <MapPin size={14} color="#fff" />
@@ -1627,7 +1626,7 @@ function DesktopHome({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void
       {/* Map teaser */}
       <div className="px-16 pb-10">
         <div className="rounded-3xl overflow-hidden relative" style={{ height: 220, background: "#E8F0EB" }}>
-          <ImageWithFallback src={BAYREUTH_MAP_SRC} alt="Bayreuth map" className="w-full h-full object-cover" />
+          <img src="/maps/map.png" alt="Bayreuth map" className="w-full h-full object-cover" />
           <div className="absolute inset-0" style={{ background: "rgba(251,247,239,0.22)" }} />
           {/* Partner pins on map */}
           {BUSINESSES.map((pin, i) => {
