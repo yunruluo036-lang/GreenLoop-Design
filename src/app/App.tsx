@@ -78,26 +78,20 @@ function GreenLoopLogo({ className = "" }: { className?: string }) {
 // ─── Shared Data ─────────────────────────────────────────────────────────────
 
 const BADGES = [
-  { label: "Organic",     labelDe: "Bio",          icon: Leaf,        color: "#2D7A45", bg: "#E8F5EE" },
-  { label: "Regional",    labelDe: "Regional",      icon: MapPin,      color: "#1A6B3E", bg: "#E0F0E8" },
-  { label: "Fair Trade",  labelDe: "Fair Trade",    icon: Globe,       color: "#5C6B2E", bg: "#EEF2DE" },
-  { label: "Vegan",       labelDe: "Vegan",         icon: Sparkles,    color: "#3A8C55", bg: "#EAF7EF" },
-  { label: "Refill",      labelDe: "Nachfüllbar",   icon: Droplets,    color: "#1E7A6A", bg: "#DEF2EF" },
-  { label: "Upcycled",    labelDe: "Upcycling",     icon: Recycle,     color: "#7A5C1E", bg: "#F7EFDE" },
-  { label: "Zero Waste",  labelDe: "Zero Waste",    icon: Package,     color: "#2A5C8A", bg: "#DEE9F5" },
-  { label: "Second-hand", labelDe: "Secondhand",    icon: ShoppingBag, color: "#8A3A5C", bg: "#F5DEE9" },
+  { label: "Vegan Options", labelDe: "Vegane Optionen", icon: Sparkles, color: "#3A8C55", bg: "#EAF7EF", emoji: "🌱" },
+  { label: "Vegetarian Options", labelDe: "Vegetarische Optionen", icon: Leaf, color: "#2D7A45", bg: "#E8F5EE", emoji: "🥗" },
+  { label: "Regional Ingredients", labelDe: "Regionale Zutaten", icon: MapPin, color: "#1A6B3E", bg: "#E0F0E8", emoji: "🥕" },
+  { label: "Seasonal Products", labelDe: "Saisonale Produkte", icon: Calendar, color: "#7A5C1E", bg: "#F7EFDE", emoji: "🍎" },
+  { label: "Organic", labelDe: "Bio", icon: Leaf, color: "#2D7A45", bg: "#E8F5EE", emoji: "🌾" },
+  { label: "Fair Trade", labelDe: "Fair Trade", icon: Globe, color: "#5C6B2E", bg: "#EEF2DE", emoji: "☕" },
+  { label: "Reusable Packaging", labelDe: "Mehrwegverpackung", icon: Recycle, color: "#1E7A6A", bg: "#DEF2EF", emoji: "♻️" },
+  { label: "Plastic-Free", labelDe: "Plastikfrei", icon: Package, color: "#2A5C8A", bg: "#DEE9F5", emoji: "🚫" },
+  { label: "Refill Station", labelDe: "Nachfüllstation", icon: Droplets, color: "#1E7A6A", bg: "#DEF2EF", emoji: "🔄" },
+  { label: "Socially Responsible", labelDe: "Sozial verantwortlich", icon: Users, color: "#0F6B3E", bg: "#E8F5EE", emoji: "🤝" },
 ];
 
 const SUSTAINABILITY_FILTERS = [
-  { label: "Fair supply chain", labelDe: "Faire Lieferkette", icon: Shield, color: "#5C6B2E", bg: "#EEF2DE" },
-  { label: "Regional products", labelDe: "Regionale Produkte", icon: MapPin, color: "#1A6B3E", bg: "#E0F0E8" },
-  { label: "Organic", labelDe: "Bio", icon: Leaf, color: "#2D7A45", bg: "#E8F5EE" },
-  { label: "Fairtrade", labelDe: "Fairtrade", icon: Globe, color: "#5C6B2E", bg: "#EEF2DE" },
-  { label: "Vegan / Vegetarian options", labelDe: "Vegane / vegetarische Optionen", icon: Sparkles, color: "#3A8C55", bg: "#EAF7EF" },
-  { label: "Plastic reduction", labelDe: "Plastikreduktion", icon: Package, color: "#2A5C8A", bg: "#DEE9F5" },
-  { label: "Reusable packaging", labelDe: "Mehrwegverpackung", icon: Recycle, color: "#1E7A6A", bg: "#DEF2EF" },
-  { label: "Sustainable sourcing", labelDe: "Nachhaltige Beschaffung", icon: Check, color: "#0F6B3E", bg: "#E8F5EE" },
-  { label: "Seasonal products", labelDe: "Saisonale Produkte", icon: Calendar, color: "#7A5C1E", bg: "#F7EFDE" },
+  ...BADGES,
 ];
 
 // Bayreuth partner businesses
@@ -112,7 +106,7 @@ const BUSINESSES = [
     phone: "Contact details coming soon",
     email: "Profile details coming soon",
     distance: "0.2 km",
-    badges: ["Vegan", "Regional", "Organic"],
+    badges: ["Vegan Options", "Vegetarian Options", "Regional Ingredients", "Seasonal Products", "Organic", "Reusable Packaging"],
     verified: true,
     image: "/shops/vedans.jpg",
     description: "Vegan and vegetarian food, fresh bowls, smoothies, and healthy meals in Bayreuth city centre.",
@@ -121,7 +115,7 @@ const BUSINESSES = [
     ownerQuoteDe: "Wir möchten, dass frisches, pflanzenbetontes Essen im Alltag einfach, nährend und einladend ist.",
     ownerName: "The Vedans Team",
     ownerNameDe: "Inhaber:in",
-    hours: "Opening hours vary",
+    hours: "Mon–Sun: 09:30–20:30",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
@@ -139,7 +133,7 @@ const BUSINESSES = [
     phone: "Contact details coming soon",
     email: "Profile details coming soon",
     distance: "0.3 km",
-    badges: ["Fair Trade", "Organic", "Regional"],
+    badges: ["Vegetarian Options", "Vegan Options", "Fair Trade", "Regional Ingredients", "Socially Responsible"],
     verified: true,
     image: "/shops/freudenherz.jpg",
     description: "Café, fair fashion, gifts, and selected sustainable and regional products.",
@@ -148,7 +142,7 @@ const BUSINESSES = [
     ownerQuoteDe: "Unser Konzept verbindet Kaffee, faire Mode, Geschenke und regionale Produkte an einem warmen Ort für bewusste Entscheidungen.",
     ownerName: "Owner",
     ownerNameDe: "Inhaber:in",
-    hours: "Opening hours vary",
+    hours: "Mon–Fri: 11:00–18:00\nSat: 10:00–18:00\nSun: Closed",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
@@ -166,7 +160,7 @@ const BUSINESSES = [
     phone: "Contact details coming soon",
     email: "Profile details coming soon",
     distance: "0.8 km",
-    badges: ["Regional", "Zero Waste", "Organic"],
+    badges: ["Regional Ingredients", "Organic", "Plastic-Free", "Reusable Packaging", "Refill Station", "Socially Responsible", "Seasonal Products"],
     verified: true,
     image: "/shops/hamsterbacke.jpg",
     description: "Local community space with sustainable food and low-waste values.",
@@ -175,7 +169,7 @@ const BUSINESSES = [
     ownerQuoteDe: "Community und Low-Waste-Werte gehören zusammen: Gutes Essen soll Menschen verbinden und nachhaltige Gewohnheiten erleichtern.",
     ownerName: "Owner",
     ownerNameDe: "Inhaber:in",
-    hours: "Opening hours vary",
+    hours: "Mon: Closed\nTue–Fri: 09:30–19:00\nSat: 09:30–15:00\nSun: Closed",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
@@ -193,7 +187,7 @@ const BUSINESSES = [
     phone: "Contact details coming soon",
     email: "Profile details coming soon",
     distance: "0.4 km",
-    badges: ["Fair Trade", "Regional"],
+    badges: ["Fair Trade", "Socially Responsible", "Reusable Packaging"],
     verified: true,
     image: "/shops/weltladen.jpg",
     description: "Fair-trade products, ethical consumption, and global responsibility.",
@@ -202,7 +196,7 @@ const BUSINESSES = [
     ownerQuoteDe: "Fairer Handel bedeutet Respekt entlang der gesamten Lieferkette, von den Produzent:innen bis zu den Menschen, die hier einkaufen.",
     ownerName: "Owner",
     ownerNameDe: "Inhaber:in",
-    hours: "Opening hours vary",
+    hours: "Mon–Fri: 10:00–18:00\nSat: 10:00–15:00\nSun: Closed",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
@@ -220,7 +214,7 @@ const BUSINESSES = [
     phone: "Contact details coming soon",
     email: "Profile details coming soon",
     distance: "0.5 km",
-    badges: ["Vegan", "Fair Trade", "Regional"],
+    badges: ["Vegan Options", "Fair Trade", "Socially Responsible", "Plastic-Free"],
     verified: true,
     image: "/shops/lemontree.jpg",
     description: "Vegan food, fair fashion, and sustainable lifestyle products.",
@@ -229,7 +223,7 @@ const BUSINESSES = [
     ownerQuoteDe: "Wir kuratieren Essen, Mode und Lifestyle-Produkte, die nachhaltigere Routinen schön und praktisch machen.",
     ownerName: "Owner",
     ownerNameDe: "Inhaber:in",
-    hours: "Opening hours vary",
+    hours: "Mon: Closed\nTue–Fri: 10:00–18:00\nSat: 10:00–15:00\nSun: Closed",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
@@ -247,7 +241,7 @@ const BUSINESSES = [
     phone: "Contact details coming soon",
     email: "Profile details coming soon",
     distance: "0.7 km",
-    badges: ["Organic", "Vegan", "Regional"],
+    badges: ["Organic", "Vegan Options", "Vegetarian Options", "Regional Ingredients", "Seasonal Products"],
     verified: true,
     image: "/shops/reformhaus-sattran.jpg",
     description: "Organic, natural, and health-oriented products.",
@@ -256,7 +250,7 @@ const BUSINESSES = [
     ownerQuoteDe: "Gesundheitsbewusstes Einkaufen gelingt am besten, wenn natürliche, biologische und sorgfältig ausgewählte Produkte verständlich sind.",
     ownerName: "Owner",
     ownerNameDe: "Inhaber:in",
-    hours: "Opening hours vary",
+    hours: "Mon–Sat: 09:00–19:00\nSun: Closed",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
@@ -274,7 +268,7 @@ const BUSINESSES = [
     phone: "Contact details coming soon",
     email: "Profile details coming soon",
     distance: "0.4 km",
-    badges: ["Upcycled", "Regional", "Zero Waste"],
+    badges: ["Reusable Packaging", "Socially Responsible", "Plastic-Free"],
     verified: true,
     image: "/shops/verstofflicht.jpg",
     description: "Fabrics, handmade goods, repair-oriented making, and creative sustainable consumption.",
@@ -283,7 +277,7 @@ const BUSINESSES = [
     ownerQuoteDe: "Selbermachen, Reparieren und hochwertige Materialien helfen Menschen, Dinge wertzuschätzen und länger zu nutzen.",
     ownerName: "Owner",
     ownerNameDe: "Inhaber:in",
-    hours: "Opening hours vary",
+    hours: "Mon: Closed\nTue–Fri: 14:00–18:00\nSat: 10:00–16:00\nSun: Closed",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
@@ -301,7 +295,7 @@ const BUSINESSES = [
     phone: "Contact details coming soon",
     email: "Profile details coming soon",
     distance: "1.2 km",
-    badges: ["Regional", "Upcycled"],
+    badges: ["Socially Responsible", "Reusable Packaging", "Regional Ingredients"],
     verified: true,
     image: "/shops/atelier-foerster-oetter.jpg",
     description: "Local craft, handmade design, and long-lasting products.",
@@ -310,7 +304,7 @@ const BUSINESSES = [
     ownerQuoteDe: "Lokales Handwerk steht für Geduld, Reparatur und Stücke, die getragen, gepflegt und bewahrt werden.",
     ownerName: "Owner",
     ownerNameDe: "Inhaber:in",
-    hours: "Opening hours vary",
+    hours: "Mon, Wed: 09:00–12:00\nTue, Thu: By appointment\nFri: 13:00–18:00\nSat–Sun: Closed",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
@@ -328,7 +322,7 @@ const BUSINESSES = [
     phone: "Contact details coming soon",
     email: "Profile details coming soon",
     distance: "0.5 km",
-    badges: ["Fair Trade", "Organic"],
+    badges: ["Fair Trade", "Organic", "Reusable Packaging", "Socially Responsible"],
     verified: true,
     image: "/shops/teegschwendner.jpg",
     description: "Tea, selected quality products, and responsible consumption.",
@@ -337,7 +331,7 @@ const BUSINESSES = [
     ownerQuoteDe: "Verantwortungsvoller Konsum beginnt mit sorgfältiger Auswahl, Qualität und der Zeit, bewusst zu wählen.",
     ownerName: "Owner",
     ownerNameDe: "Inhaber:in",
-    hours: "Opening hours vary",
+    hours: "Mon–Fri: 09:30–18:00\nSat: 09:30–16:00\nSun: Closed",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
@@ -355,7 +349,7 @@ const BUSINESSES = [
     phone: "Contact details coming soon",
     email: "Profile details coming soon",
     distance: "0.3 km",
-    badges: ["Regional", "Upcycled"],
+    badges: ["Reusable Packaging", "Socially Responsible"],
     verified: true,
     image: "/shops/andre-hagen-optiker.jpg",
     description: "Local service, repair, long-lasting eyewear, and responsible consumption.",
@@ -364,7 +358,7 @@ const BUSINESSES = [
     ownerQuoteDe: "Gute Brillen sollen lange halten. Sorgfältiger lokaler Service und Reparatur helfen, die passende Brille länger zu nutzen.",
     ownerName: "Owner",
     ownerNameDe: "Inhaber:in",
-    hours: "Opening hours vary",
+    hours: "Mon: Closed\nTue–Fri: 09:00–18:00\nSat: 10:00–15:00\nSun: Closed",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
@@ -547,31 +541,18 @@ function ScreenWelcome({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => vo
           </div>
         </div>
 
-        <div className="flex flex-col items-center text-center mt-8 flex-1">
+        <div className="flex flex-col items-center text-center mt-22">
           <div className="w-24 h-24 rounded-3xl bg-white flex items-center justify-center mb-6 shadow-xl p-3">
             <GreenLoopLogo className="w-full h-full" />
           </div>
-          <h1 className="text-4xl font-bold text-white mb-2" style={{ fontFamily: "'Lora', serif", lineHeight: 1.1 }}>GreenLoop</h1>
+          <h1 className="text-4xl font-bold text-white mb-4" style={{ fontFamily: "'Lora', serif", lineHeight: 1.1 }}>GreenLoop</h1>
 
-          <div className="w-full rounded-3xl p-6 mb-6" style={{ background: "rgba(255,255,255,0.12)" }}>
-            <p className="text-white text-lg font-medium leading-snug mb-2" style={{ fontFamily: "'Lora', serif" }}>
-              {lang === "de" ? "Entdecke nachhaltige Orte in deiner Nähe." : "Discover your city's most sustainable places."}
-            </p>
-            <p className="text-white/70 text-sm">
-              {lang === "de"
-                ? "Wir verbinden Communities durch nachhaltige lokale Entscheidungen."
-                : "Connecting communities through sustainable local choices."}
-            </p>
-          </div>
-
-          <div className="flex gap-2 mb-12">
-            {[true, false, false].map((a, i) => (
-              <div key={i} className="rounded-full" style={{ width: a ? 24 : 8, height: 8, background: a ? "#fff" : "rgba(255,255,255,0.35)" }} />
-            ))}
-          </div>
+          <p className="w-full text-white text-[19px] font-semibold leading-snug" style={{ fontFamily: "'Lora', serif" }}>
+            {lang === "de" ? "Entdecke Orte, die etwas bewirken." : "Discover places that make a difference."}
+          </p>
         </div>
 
-        <div className="pb-10 flex flex-col gap-3">
+        <div className="mt-auto pb-10 flex flex-col gap-3">
           <button className="w-full py-4 rounded-2xl bg-white text-[#0F6B3E] font-bold text-base" style={{ boxShadow: "0 8px 24px rgba(0,0,0,0.15)" }}>
             {lang === "de" ? "Loslegen" : "Get Started"}
           </button>
@@ -812,7 +793,7 @@ function ScreenMap({ lang }: { lang: Lang }) {
             </div>
             <div className="flex items-center gap-3 mt-3 pt-3" style={{ borderTop: "1px solid rgba(15,107,62,0.1)" }}>
               <span className="text-xs text-[#0F6B3E] font-semibold flex items-center gap-1"><MapPin size={11} />{BUSINESSES[0].address}</span>
-              <span className="text-xs text-[#6B7B6B] flex items-center gap-1 ml-auto"><Clock size={11} />{BUSINESSES[0].hours.split(",")[0]}</span>
+              <span className="text-xs text-[#6B7B6B] flex items-start gap-1 ml-auto whitespace-pre-line"><Clock size={11} className="mt-0.5 flex-shrink-0" />{BUSINESSES[0].hours}</span>
             </div>
           </div>
           <BottomNav active={T[lang].map} lang={lang} />
@@ -825,6 +806,49 @@ function ScreenMap({ lang }: { lang: Lang }) {
 // Screen 4: Discover
 function ScreenDiscover({ lang }: { lang: Lang }) {
   const t = T[lang];
+  const exploreCardDetails: Record<string, { hours: string; badges: string[] }> = {
+    "Vedans Fresh ’n’ Healthy": {
+      hours: "Mon–Sun: 09:30–20:30",
+      badges: ["Vegan Options", "Vegetarian Options", "Regional Ingredients", "Organic"],
+    },
+    "Café Freudenherz": {
+      hours: "Mon–Fri: 11:00–18:00\nSat: 10:00–18:00\nSun: Closed",
+      badges: ["Vegetarian Options", "Vegan Options", "Fair Trade", "Socially Responsible"],
+    },
+    "Die Hamsterbacke": {
+      hours: "Tue–Fri: 09:30–19:00\nSat: 09:30–15:00\nMon/Sun: Closed",
+      badges: ["Regional Ingredients", "Organic", "Refill Station", "Plastic-Free"],
+    },
+    "Der Weltladen Bayreuth": {
+      hours: "Mon–Fri: 10:00–18:00\nSat: 10:00–15:00\nSun: Closed",
+      badges: ["Fair Trade", "Socially Responsible", "Reusable Packaging", "Regional Ingredients"],
+    },
+    "Lemon Tree": {
+      hours: "Tue–Fri: 10:00–18:00\nSat: 10:00–15:00\nMon/Sun: Closed",
+      badges: ["Vegan Options", "Fair Trade", "Plastic-Free", "Socially Responsible"],
+    },
+    "Reformhaus Sattran GmbH": {
+      hours: "Mon–Sat: 09:00–19:00\nSun: Closed",
+      badges: ["Organic", "Vegan Options", "Vegetarian Options", "Seasonal Products"],
+    },
+    "VerSTOFFlicht": {
+      hours: "Tue–Fri: 14:00–18:00\nSat: 10:00–16:00\nMon/Sun: Closed",
+      badges: ["Reusable Packaging", "Socially Responsible", "Plastic-Free", "Regional Ingredients"],
+    },
+    "Atelier Förster-Oetter": {
+      hours: "Mon, Wed: 09:00–12:00\nTue, Thu: By appointment\nFri: 13:00–18:00\nSat–Sun: Closed",
+      badges: ["Socially Responsible", "Reusable Packaging", "Regional Ingredients", "Seasonal Products"],
+    },
+    "TeeGschwendner Bayreuth": {
+      hours: "Mon–Fri: 09:30–18:00\nSat: 09:30–16:00\nSun: Closed",
+      badges: ["Fair Trade", "Organic", "Reusable Packaging", "Seasonal Products"],
+    },
+    "André Hagen – Der Optiker": {
+      hours: "Tue–Fri: 09:00–18:00\nSat: 10:00–15:00\nMon/Sun: Closed",
+      badges: ["Socially Responsible", "Reusable Packaging", "Regional Ingredients", "Plastic-Free"],
+    },
+  };
+
   return (
     <MobileFrame>
       <div className="flex flex-col h-full">
@@ -850,22 +874,39 @@ function ScreenDiscover({ lang }: { lang: Lang }) {
           </div>
         </div>
 
-        <div className="px-5 flex flex-col gap-3 pb-4">
-          {BUSINESSES.slice(0, 6).map((b) => (
-            <div key={b.id} className="rounded-2xl bg-white overflow-hidden flex gap-3 p-3" style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
-              <ImageWithFallback src={b.image} alt={b.name} className="w-24 h-24 rounded-xl object-cover flex-shrink-0" />
-              <div className="flex-1 min-w-0 py-0.5">
+        <div className="px-5 flex-1 overflow-y-auto flex flex-col gap-3 pb-6">
+          {BUSINESSES.map((b) => {
+            const card = exploreCardDetails[b.name] ?? { hours: b.hours, badges: b.badges.slice(0, 4) };
+            const compactHours = card.hours.replace(/\n/g, " · ");
+            return (
+            <div key={b.id} className="rounded-2xl bg-white flex items-start gap-2.5 p-2.5" style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
+              <ImageWithFallback src={b.image} alt={b.name} className="w-24 h-28 rounded-xl object-cover flex-shrink-0" />
+              <div className="flex-1 min-w-0">
                 <h4 className="font-bold text-[#1A2E1A] text-sm leading-tight">{lang === "de" ? b.nameDe : b.name}</h4>
-                <p className="text-[11px] text-[#6B7B6B] mt-0.5">{lang === "de" ? b.categoryDe : b.category}</p>
-                <div className="flex items-center gap-2 mt-1 mb-2">
+                <p className="text-[10px] text-[#6B7B6B] mt-0.5 leading-tight">{lang === "de" ? b.categoryDe : b.category}</p>
+                <div className="flex items-center gap-2 mt-0.5">
                   <span className="text-[10px] text-[#6B7B6B] flex items-center gap-0.5"><MapPin size={9} />{b.distance}</span>
                 </div>
+                <div className="flex items-start gap-1 mt-1 mb-1.5">
+                  <Clock size={10} color="#0F6B3E" className="mt-0.5 flex-shrink-0" />
+                  <span className="text-[9px] leading-tight text-[#6B7B6B]">{compactHours}</span>
+                </div>
                 <div className="flex gap-1 flex-wrap">
-                  {b.badges.slice(0, 2).map((badge) => <Badge key={badge} label={badge} lang={lang} small />)}
+                  {card.badges.slice(0, 4).map((badge) => {
+                    const badgeConfig = BADGES.find((item) => item.label === badge) ?? BADGES[0];
+                    const label = lang === "de" ? badgeConfig.labelDe : badgeConfig.label;
+                    return (
+                      <span key={badge} className="inline-flex rounded-full px-1.5 py-0.5 text-[9px] font-medium leading-none"
+                        style={{ background: badgeConfig.bg, color: badgeConfig.color }}>
+                        {label}
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             </div>
-          ))}
+          );
+          })}
         </div>
 
         <div className="mt-auto"><BottomNav active={T[lang].explore} lang={lang} /></div>
@@ -877,7 +918,7 @@ function ScreenDiscover({ lang }: { lang: Lang }) {
 // Screen 5: Filter
 function ScreenFilter({ lang }: { lang: Lang }) {
   const t = T[lang];
-  const [selected, setSelected] = useState<string[]>(["Organic", "Vegan / Vegetarian options"]);
+  const [selected, setSelected] = useState<string[]>(["Organic", "Vegan Options"]);
   const toggle = (l: string) => setSelected((s) => s.includes(l) ? s.filter((x) => x !== l) : [...s, l]);
   return (
     <MobileFrame>
@@ -917,21 +958,23 @@ function ScreenFilter({ lang }: { lang: Lang }) {
           </div>
 
           <div className="mb-5">
-            <h3 className="font-bold text-[#1A2E1A] text-sm mb-3">{t.sustainability}</h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-bold text-[#1A2E1A] text-sm">{t.sustainability}</h3>
+              <span className="text-xs font-semibold text-[#6B7B6B]">{SUSTAINABILITY_FILTERS.length} filters</span>
+            </div>
             <div className="grid grid-cols-2 gap-2">
               {SUSTAINABILITY_FILTERS.map((b) => {
-                const Icon = b.icon;
                 const active = selected.includes(b.label);
                 const displayLabel = lang === "de" ? b.labelDe : b.label;
                 return (
                   <button key={b.label} onClick={() => toggle(b.label)}
-                    className="flex items-center gap-2 p-3 rounded-2xl transition-all"
+                    className="relative flex min-h-[82px] flex-col items-center justify-center gap-1.5 p-3 rounded-2xl text-center transition-all"
                     style={active ? { background: b.bg, border: `2px solid ${b.color}` } : { background: "#fff", border: "2px solid transparent", boxShadow: "0 1px 8px rgba(0,0,0,0.06)" }}>
-                    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: b.bg }}>
-                      <Icon size={16} color={b.color} />
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center text-lg" style={{ background: b.bg }}>
+                      {b.emoji}
                     </div>
-                    <span className="text-xs font-semibold text-[#1A2E1A]">{displayLabel}</span>
-                    {active && <Check size={12} color={b.color} className="ml-auto" />}
+                    <span className="text-xs font-semibold leading-tight text-center text-[#1A2E1A]">{displayLabel}</span>
+                    {active && <Check size={12} color={b.color} className="absolute right-3 top-3" />}
                   </button>
                 );
               })}
@@ -941,7 +984,7 @@ function ScreenFilter({ lang }: { lang: Lang }) {
 
         <div className="mt-auto px-5 pb-10 pt-4" style={{ borderTop: "1px solid rgba(15,107,62,0.1)" }}>
           <button className="w-full py-4 rounded-2xl bg-[#0F6B3E] text-white font-bold text-base">
-            {lang === "de" ? "10 Ergebnisse anzeigen" : "Show 10 Results"}
+            {lang === "de" ? `${SUSTAINABILITY_FILTERS.length} Ergebnisse anzeigen` : `Show ${SUSTAINABILITY_FILTERS.length} Results`}
           </button>
         </div>
       </div>
@@ -986,7 +1029,7 @@ function ScreenBusinessProfile({ lang }: { lang: Lang }) {
           {/* Contact + hours row */}
           <div className="flex flex-col gap-1.5 py-3 mb-3" style={{ borderBottom: "1px solid rgba(15,107,62,0.1)" }}>
             <span className="flex items-center gap-1.5 text-xs text-[#6B7B6B]"><MapPin size={13} color="#0F6B3E" />{b.address}</span>
-            <span className="flex items-center gap-1.5 text-xs text-[#6B7B6B]"><Clock size={13} color="#0F6B3E" />{b.hours}</span>
+            <span className="flex items-start gap-1.5 text-xs text-[#6B7B6B] whitespace-pre-line"><Clock size={13} color="#0F6B3E" className="mt-0.5 flex-shrink-0" />{b.hours}</span>
             <span className="flex items-center gap-1.5 text-xs text-[#6B7B6B]"><Phone size={13} color="#0F6B3E" />{b.phone}</span>
           </div>
 
@@ -1070,17 +1113,35 @@ function ScreenSustainabilityInfo({ lang }: { lang: Lang }) {
   const t = T[lang];
   const b = BUSINESSES[0];
   const criteriaCopy: Record<string, { title: string; titleDe: string; desc: string; descDe: string }> = {
+    "Vegan Options": {
+      title: "Vegan options",
+      titleDe: "Vegane Optionen",
+      desc: "This profile includes vegan choices or plant-forward products.",
+      descDe: "Dieses Profil umfasst vegane Angebote oder pflanzenbasierte Produkte.",
+    },
+    "Vegetarian Options": {
+      title: "Vegetarian options",
+      titleDe: "Vegetarische Optionen",
+      desc: "This profile includes vegetarian choices for everyday sustainable decisions.",
+      descDe: "Dieses Profil umfasst vegetarische Angebote für nachhaltige Alltagsentscheidungen.",
+    },
+    "Regional Ingredients": {
+      title: "Regional ingredients",
+      titleDe: "Regionale Zutaten",
+      desc: "This business uses or promotes regional ingredients and local supply connections.",
+      descDe: "Dieser Betrieb nutzt oder fördert regionale Zutaten und lokale Lieferbeziehungen.",
+    },
+    "Seasonal Products": {
+      title: "Seasonal products",
+      titleDe: "Saisonale Produkte",
+      desc: "This profile highlights seasonal products or season-aware sourcing.",
+      descDe: "Dieses Profil hebt saisonale Produkte oder saisonbewusste Beschaffung hervor.",
+    },
     Organic: {
       title: "Organic and natural products",
       titleDe: "Bio- und Naturprodukte",
       desc: "This profile highlights organic, natural, or health-oriented product choices.",
       descDe: "Dieses Profil hebt Bio-, Natur- oder gesundheitsorientierte Produktauswahl hervor.",
-    },
-    Regional: {
-      title: "Local and regional connection",
-      titleDe: "Lokale und regionale Verankerung",
-      desc: "This business contributes to Bayreuth's local economy and neighbourhood life.",
-      descDe: "Dieser Betrieb stärkt Bayreuths lokale Wirtschaft und das Leben im Viertel.",
     },
     "Fair Trade": {
       title: "Fair trade and ethical consumption",
@@ -1088,23 +1149,29 @@ function ScreenSustainabilityInfo({ lang }: { lang: Lang }) {
       desc: "This profile includes fair-trade, ethical, or responsibility-focused consumption.",
       descDe: "Dieses Profil umfasst Fair Trade, ethischen Konsum oder verantwortungsvolle Produktauswahl.",
     },
-    Vegan: {
-      title: "Vegan and plant-forward choices",
-      titleDe: "Vegane und pflanzenbasierte Auswahl",
-      desc: "This profile includes vegan, vegetarian, or plant-forward food and lifestyle choices.",
-      descDe: "Dieses Profil umfasst vegane, vegetarische oder pflanzenbasierte Food- und Lifestyle-Angebote.",
+    "Reusable Packaging": {
+      title: "Reusable packaging",
+      titleDe: "Mehrwegverpackung",
+      desc: "This profile supports reusable packaging, return systems, or reduced single-use packaging.",
+      descDe: "Dieses Profil unterstützt Mehrwegverpackung, Rückgabesysteme oder weniger Einwegverpackung.",
     },
-    "Zero Waste": {
-      title: "Low-waste values",
-      titleDe: "Low-Waste-Werte",
-      desc: "This profile includes low-waste, reuse, or waste-reduction values.",
-      descDe: "Dieses Profil umfasst Low-Waste-, Wiederverwendungs- oder Abfallvermeidungswerte.",
+    "Plastic-Free": {
+      title: "Plastic-free choices",
+      titleDe: "Plastikfreie Auswahl",
+      desc: "This profile includes plastic-free products, packaging, or low-plastic alternatives.",
+      descDe: "Dieses Profil umfasst plastikfreie Produkte, Verpackungen oder plastikarme Alternativen.",
     },
-    Upcycled: {
-      title: "Repair and long-lasting use",
-      titleDe: "Reparatur und lange Nutzung",
-      desc: "This profile supports repair-oriented, handmade, upcycled, or long-lasting consumption.",
-      descDe: "Dieses Profil unterstützt reparaturorientierten, handgemachten, upgecycelten oder langlebigen Konsum.",
+    "Refill Station": {
+      title: "Refill station",
+      titleDe: "Nachfüllstation",
+      desc: "This profile includes refill, bulk, or bring-your-own-container options.",
+      descDe: "Dieses Profil umfasst Nachfüll-, Unverpackt- oder eigene-Behälter-Angebote.",
+    },
+    "Socially Responsible": {
+      title: "Socially responsible",
+      titleDe: "Sozial verantwortlich",
+      desc: "This profile highlights responsible business values, fair relationships, or community contribution.",
+      descDe: "Dieses Profil hebt verantwortungsvolle Unternehmenswerte, faire Beziehungen oder Community-Beitrag hervor.",
     },
   };
   const criteria = b.badges.map((badge) => {
@@ -1493,7 +1560,7 @@ function DesktopHome({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void
             {lang === "de" ? "Nachhaltige lokale Entscheidungen" : "Sustainable local choices"}
           </div>
           <h1 className="text-6xl font-bold text-white mb-6 leading-none" style={{ fontFamily: "'Lora', serif" }}>
-            {lang === "de" ? <>Dein Guide für<br />nachhaltige<br />lokale Orte.</> : <>Your guide to<br />sustainable<br />local choices.</>}
+            {lang === "de" ? <>Entdecke Orte,<br />die etwas<br />bewirken.</> : <>Discover places<br />that make<br />a difference.</>}
           </h1>
           <p className="text-white/80 text-lg mb-8 leading-relaxed max-w-md">
             {lang === "de"
@@ -1513,7 +1580,7 @@ function DesktopHome({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void
         <div className="absolute right-16 bottom-16 flex gap-4">
           {[
             { value: "10", label: lang === "de" ? "Geprüfte Partner" : "Verified Partners" },
-            { value: "8",  label: lang === "de" ? "Kriterien" : "Criteria" },
+            { value: String(SUSTAINABILITY_FILTERS.length),  label: lang === "de" ? "Kriterien" : "Criteria" },
             { value: lang === "de" ? "Lokal" : "Local", label: lang === "de" ? "& transparent" : "& transparent" },
           ].map((s) => (
             <div key={s.label} className="rounded-2xl p-5 text-center backdrop-blur-sm" style={{ background: "rgba(255,255,255,0.15)", minWidth: 130 }}>
@@ -1644,6 +1711,49 @@ function DesktopHome({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void
 function DesktopExplore({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
   const t = T[lang];
   const [activeFilter, setActiveFilter] = useState("All");
+  const exploreCardDetails: Record<string, { hours: string; badges: string[] }> = {
+    "Vedans Fresh ’n’ Healthy": {
+      hours: "Mon–Sun: 09:30–20:30",
+      badges: ["Vegan Options", "Vegetarian Options", "Regional Ingredients", "Organic"],
+    },
+    "Café Freudenherz": {
+      hours: "Mon–Fri: 11:00–18:00\nSat: 10:00–18:00\nSun: Closed",
+      badges: ["Vegetarian Options", "Vegan Options", "Fair Trade", "Socially Responsible"],
+    },
+    "Die Hamsterbacke": {
+      hours: "Tue–Fri: 09:30–19:00\nSat: 09:30–15:00\nMon/Sun: Closed",
+      badges: ["Regional Ingredients", "Organic", "Refill Station", "Plastic-Free"],
+    },
+    "Der Weltladen Bayreuth": {
+      hours: "Mon–Fri: 10:00–18:00\nSat: 10:00–15:00\nSun: Closed",
+      badges: ["Fair Trade", "Socially Responsible", "Reusable Packaging", "Regional Ingredients"],
+    },
+    "Lemon Tree": {
+      hours: "Tue–Fri: 10:00–18:00\nSat: 10:00–15:00\nMon/Sun: Closed",
+      badges: ["Vegan Options", "Fair Trade", "Plastic-Free", "Socially Responsible"],
+    },
+    "Reformhaus Sattran GmbH": {
+      hours: "Mon–Sat: 09:00–19:00\nSun: Closed",
+      badges: ["Organic", "Vegan Options", "Vegetarian Options", "Seasonal Products"],
+    },
+    "VerSTOFFlicht": {
+      hours: "Tue–Fri: 14:00–18:00\nSat: 10:00–16:00\nMon/Sun: Closed",
+      badges: ["Reusable Packaging", "Socially Responsible", "Plastic-Free", "Regional Ingredients"],
+    },
+    "Atelier Förster-Oetter": {
+      hours: "Mon, Wed: 09:00–12:00\nTue, Thu: By appointment\nFri: 13:00–18:00\nSat–Sun: Closed",
+      badges: ["Socially Responsible", "Reusable Packaging", "Regional Ingredients", "Seasonal Products"],
+    },
+    "TeeGschwendner Bayreuth": {
+      hours: "Mon–Fri: 09:30–18:00\nSat: 09:30–16:00\nSun: Closed",
+      badges: ["Fair Trade", "Organic", "Reusable Packaging", "Seasonal Products"],
+    },
+    "André Hagen – Der Optiker": {
+      hours: "Tue–Fri: 09:00–18:00\nSat: 10:00–15:00\nMon/Sun: Closed",
+      badges: ["Socially Responsible", "Reusable Packaging", "Regional Ingredients", "Plastic-Free"],
+    },
+  };
+
   return (
     <DesktopFrame>
       <DesktopNav lang={lang} setLang={setLang} />
@@ -1682,17 +1792,19 @@ function DesktopExplore({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => v
                 </button>
               ))}
               <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(15,107,62,0.1)" }}>
-                <h3 className="font-bold text-[#1A2E1A] mb-3">{t.sustainability}</h3>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-bold text-[#1A2E1A]">{t.sustainability}</h3>
+                  <span className="text-xs font-semibold text-[#6B7B6B]">{SUSTAINABILITY_FILTERS.length} filters</span>
+                </div>
                 <div className="flex flex-col gap-2">
                   {SUSTAINABILITY_FILTERS.map((b) => {
-                    const Icon = b.icon;
                     return (
                       <label key={b.label} className="flex items-center gap-2.5 cursor-pointer">
                         <div className="w-4 h-4 rounded-md border-2 flex items-center justify-center" style={{ borderColor: "#0F6B3E", background: "#E8F5EE" }}>
                           <Check size={10} color="#0F6B3E" strokeWidth={3} />
                         </div>
-                        <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: b.bg }}>
-                          <Icon size={12} color={b.color} />
+                        <div className="w-6 h-6 rounded-lg flex items-center justify-center text-sm" style={{ background: b.bg }}>
+                          {b.emoji}
                         </div>
                         <span className="text-sm text-[#3A4A3A]">{lang === "de" ? b.labelDe : b.label}</span>
                       </label>
@@ -1705,7 +1817,9 @@ function DesktopExplore({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => v
 
           {/* Business grid — no star ratings */}
           <div className="flex-1 grid grid-cols-3 gap-6 content-start">
-            {BUSINESSES.map((b) => (
+            {BUSINESSES.map((b) => {
+              const card = exploreCardDetails[b.name] ?? { hours: b.hours, badges: b.badges.slice(0, 4) };
+              return (
               <div key={b.id} className="rounded-2xl bg-white overflow-hidden cursor-pointer hover:shadow-xl transition-shadow" style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.07)" }}>
                 <div className="relative h-40">
                   <ImageWithFallback src={b.image} alt={b.name} className="w-full h-full object-cover" />
@@ -1716,13 +1830,17 @@ function DesktopExplore({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => v
                 <div className="p-4">
                   <h4 className="font-bold text-[#1A2E1A] text-sm leading-tight mb-1">{lang === "de" ? b.nameDe : b.name}</h4>
                   <p className="text-xs text-[#6B7B6B] mb-1">{lang === "de" ? b.categoryDe : b.category} · {b.distance}</p>
-                  <p className="text-xs text-[#3A4A3A] leading-relaxed mb-3 line-clamp-2">{lang === "de" ? b.descriptionDe : b.description}</p>
+                  <div className="flex items-start gap-1.5 mb-3">
+                    <Clock size={12} color="#0F6B3E" className="mt-0.5 flex-shrink-0" />
+                    <span className="text-[11px] leading-snug text-[#6B7B6B] whitespace-pre-line">{card.hours}</span>
+                  </div>
                   <div className="flex gap-1.5 flex-wrap">
-                    {b.badges.slice(0, 2).map((badge) => <Badge key={badge} label={badge} lang={lang} small />)}
+                    {card.badges.slice(0, 4).map((badge) => <Badge key={badge} label={badge} lang={lang} small />)}
                   </div>
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
         </div>
       </div>
@@ -1734,14 +1852,16 @@ function DesktopExplore({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => v
 function DesktopCriteria({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
   const t = T[lang];
   const criteria = [
-    { ...BADGES[0], title: lang==="de"?"Zertifiziert Bio":"Certified Organic", desc: lang==="de"?"Produkte erfüllen die EU-Bio-Verordnung. Geprüft von akkreditierten Zertifizierungsstellen. Keine synthetischen Pestizide oder gentechnisch veränderten Organismen.":"Products comply with EU organic regulation. Verified by accredited certification bodies. No synthetic pesticides, GMOs or artificial inputs.", tag: "EU Bio" },
-    { ...BADGES[1], title: lang==="de"?"Regionale Herkunft":"Regional Sourcing", desc: lang==="de"?"80 % der Kernzutaten aus einem Umkreis von 100 km rund um Bayreuth. Wir erfassen Lieferketten und prüfen die Partnerbetriebe namentlich.":"80%+ of core ingredients from within 100 km of Bayreuth. We map and verify supply chains with named farm partnerships.", tag: "100 km" },
-    { ...BADGES[2], title: lang==="de"?"Fairer Handel":"Fair Trade", desc: lang==="de"?"Fairtrade-, WFTO- oder gleichwertige Zertifizierung, die faire Löhne und Arbeitsbedingungen in der gesamten Lieferkette sicherstellt.":"Holds Fairtrade, WFTO, or equivalent certification ensuring fair wages and conditions throughout the supply chain.", tag: lang==="de"?"Zertifiziert":"Certified" },
-    { ...BADGES[3], title: lang==="de"?"100 % Vegan":"100% Vegan", desc: lang==="de"?"Keine tierischen Produkte oder Nebenerzeugnisse. Keine Tierversuche. Geprüft durch Zutatenaudits und Lieferantenerklärungen.":"No animal products or by-products. No animal testing. Verified through ingredient audits and supplier declarations.", tag: lang==="de"?"Zertifiziert":"Certified" },
-    { ...BADGES[4], title: lang==="de"?"Nachfüllsystem":"Refill System", desc: lang==="de"?"Bietet Nachfüllbehälter oder Schüttspender an. Kunden können eigene Verpackungen mitbringen — kein Einwegplastik.":"Offers refillable containers or bulk dispensers. Customers can bring their own packaging — zero single-use plastic.", tag: lang==="de"?"Aktiv":"Active" },
-    { ...BADGES[5], title: lang==="de"?"Upcycling":"Upcycled", desc: lang==="de"?"Produkte werden aus Abfallströmen oder Vorproduktionsmaterialien hergestellt. Kreislauforientiert — was weggeworfen wurde, wird neu.":"Products made from waste streams or pre-consumer materials. Circular by design.", tag: lang==="de"?"Kreislauf":"Circular" },
-    { ...BADGES[6], title: lang==="de"?"Zero Waste":"Zero Waste", desc: lang==="de"?"Zertifiziert Zero Waste oder nachweislich 90 %+ des Betriebsabfalls aus der Deponierung durch Reduktion, Wiederverwendung und Kompostierung umgeleitet.":"Certified Zero Waste or independently verified to divert 90%+ of operational waste from landfill.", tag: "90%+" },
-    { ...BADGES[7], title: lang==="de"?"Secondhand":"Second-hand", desc: lang==="de"?"Verkauf von gebrauchten Waren als primäres Geschäftsmodell. Verlängert die Produktlebensdauer und verringert den Bedarf an Neuproduktion.":"Sells pre-owned goods as a primary business model. Extends product lifetimes, reduces new production demand.", tag: lang==="de"?"Wiederverkauf":"Resale" },
+    { ...BADGES[0], title: lang==="de"?"Vegane Optionen":"Vegan Options", desc: lang==="de"?"Pflanzenbasierte Speisen, Getränke oder Produkte, die bewusst tierfreie Alternativen anbieten.":"Plant-based food, drinks, or products that make animal-free choices easier.", tag: "🌱" },
+    { ...BADGES[1], title: lang==="de"?"Vegetarische Optionen":"Vegetarian Options", desc: lang==="de"?"Vegetarische Auswahl für einfache nachhaltige Entscheidungen im Alltag.":"Vegetarian choices for easy sustainable everyday decisions.", tag: "🥗" },
+    { ...BADGES[2], title: lang==="de"?"Regionale Zutaten":"Regional Ingredients", desc: lang==="de"?"Zutaten oder Produkte mit regionalem Bezug und lokalen Lieferbeziehungen.":"Ingredients or products with regional sourcing and local supply connections.", tag: "🥕" },
+    { ...BADGES[3], title: lang==="de"?"Saisonale Produkte":"Seasonal Products", desc: lang==="de"?"Produkte oder Angebote, die sich an saisonaler Verfügbarkeit orientieren.":"Products or offers guided by seasonal availability.", tag: "🍎" },
+    { ...BADGES[4], title: lang==="de"?"Bio":"Organic", desc: lang==="de"?"Bio-, Natur- oder gesundheitsorientierte Produktauswahl.":"Organic, natural, or health-oriented product choices.", tag: "🌾" },
+    { ...BADGES[5], title: lang==="de"?"Fair Trade":"Fair Trade", desc: lang==="de"?"Fair gehandelte Produkte und verantwortungsvolle Lieferbeziehungen.":"Fair-trade products and responsible supplier relationships.", tag: "☕" },
+    { ...BADGES[6], title: lang==="de"?"Mehrwegverpackung":"Reusable Packaging", desc: lang==="de"?"Mehrweg-, Rückgabe- oder Verpackungsreduktionssysteme.":"Reusable, returnable, or packaging-reduction systems.", tag: "♻️" },
+    { ...BADGES[7], title: lang==="de"?"Plastikfrei":"Plastic-Free", desc: lang==="de"?"Plastikfreie Produkte, Verpackungen oder plastikarme Alternativen.":"Plastic-free products, packaging, or low-plastic alternatives.", tag: "🚫" },
+    { ...BADGES[8], title: lang==="de"?"Nachfüllstation":"Refill Station", desc: lang==="de"?"Nachfüll-, Unverpackt- oder eigene-Behälter-Angebote.":"Refill, bulk, or bring-your-own-container options.", tag: "🔄" },
+    { ...BADGES[9], title: lang==="de"?"Sozial verantwortlich":"Socially Responsible", desc: lang==="de"?"Faire Beziehungen, Community-Beitrag und verantwortungsvolle Unternehmenswerte.":"Fair relationships, community contribution, and responsible business values.", tag: "🤝" },
   ];
   return (
     <DesktopFrame>
