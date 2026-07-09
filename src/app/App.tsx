@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { ImageWithFallback } from "./components/figma/ImageWithFallback";
 import {
   Leaf, MapPin, Search, ChevronRight, ChevronLeft,
   Heart, Home, Compass, User, Bell, Filter, X, Check,
   Calendar, Users, ArrowRight, Package, Recycle,
-  ShoppingBag, Droplets, Globe, Award, Plus,
+  ShoppingBag, Droplets, Globe, Award,
   Instagram, Facebook, Twitter, Phone, Clock,
-  TrendingUp, Shield, Sparkles, TreePine,
+  TrendingUp, Shield, Sparkles,
   MessageSquare, Languages, Settings, BookOpen, Info
 } from "lucide-react";
 
@@ -15,7 +16,7 @@ const T = {
   en: {
     discover: "Discover", explore: "Explore", map: "Map", community: "Community",
     profile: "Profile", home: "Home", filter: "Filter", search: "Search businesses…",
-    verified: "GreenLoop Verified", verifiedCriteria: "Verified Criteria",
+    verifiedCriteria: "Verified Criteria",
     sustainabilityInfo: "Sustainability Info", firstVisitOffer: "Your First Visit Offer",
     showAt: "Show this at", freeHotDrink: "One free hot drink", freeHotDrinkSub: "on your first visit",
     scanCheckout: "Scan at the counter to redeem your welcome gift",
@@ -26,20 +27,19 @@ const T = {
     getDirections: "Get Directions", share: "Share", seeAll: "See all",
     featuredPartners: "Featured Partners", nearYou: "Near You",
     goodMorning: "Good morning,", welcomeBack: "Welcome to GreenLoop",
-    welcomeSub: "Discover Bayreuth's most sustainable shops, cafés, and services.",
+    welcomeSub: "Discover sustainable local shops, cafés, restaurants, and makers.",
     aboutUs: "About Us", howItWorks: "How It Works",
     signIn: "Sign in", getApp: "Get the App",
     showResults: "Show Results", resetAll: "Reset all", distance: "Distance",
     category: "Category", sustainability: "Sustainability", rating: "Rating",
-    hostEvent: "Host an event", hostEventSub: "Share your sustainability knowledge",
     memberSince: "Member since 2024", greenCitizen: "🌿 Green Citizen",
-    visits: "Visits", saved: "Saved", badgesEarned: "Exploration Badges",
+    saved: "Saved", badgesEarned: "Exploration Badges",
     viewAll: "View all", contact: "Contact",
   },
   de: {
     discover: "Entdecken", explore: "Erkunden", map: "Karte", community: "Community",
     profile: "Profil", home: "Start", filter: "Filter", search: "Geschäfte suchen…",
-    verified: "GreenLoop Geprüft", verifiedCriteria: "Geprüfte Kriterien",
+    verifiedCriteria: "Geprüfte Kriterien",
     sustainabilityInfo: "Nachhaltigkeitsinfos", firstVisitOffer: "Dein Erstbesuchs-Angebot",
     showAt: "Zeig das bei", freeHotDrink: "Ein heißes Getränk gratis", freeHotDrinkSub: "bei deinem ersten Besuch",
     scanCheckout: "Zeig den Code an der Theke und erhalte dein Willkommensgeschenk",
@@ -50,18 +50,30 @@ const T = {
     getDirections: "Route", share: "Teilen", seeAll: "Alle sehen",
     featuredPartners: "Unsere Partner", nearYou: "In deiner Nähe",
     goodMorning: "Guten Morgen,", welcomeBack: "Willkommen bei GreenLoop",
-    welcomeSub: "Entdecke Bayreuths nachhaltigste Läden, Cafés und Dienstleistungen.",
+    welcomeSub: "Entdecke nachhaltige lokale Läden, Cafés, Restaurants und Macher.",
     aboutUs: "Über uns", howItWorks: "So funktioniert's",
     signIn: "Anmelden", getApp: "App laden",
     showResults: "Ergebnisse anzeigen", resetAll: "Alle zurücksetzen", distance: "Entfernung",
     category: "Kategorie", sustainability: "Nachhaltigkeit", rating: "Bewertung",
-    hostEvent: "Veranstaltung anbieten", hostEventSub: "Teile dein Nachhaltigkeitswissen",
     memberSince: "Mitglied seit 2024", greenCitizen: "🌿 Grüner Bürger",
-    visits: "Besuche", saved: "Gespeichert", badgesEarned: "Entdeckungs-Badges",
+    saved: "Gespeichert", badgesEarned: "Entdeckungs-Badges",
     viewAll: "Alle ansehen", contact: "Kontakt",
   },
 };
 type Lang = "en" | "de";
+
+const GREENLOOP_LOGO_SRC = "/greenloop-logo.png";
+const BAYREUTH_MAP_SRC = "/maps/map.png";
+
+function GreenLoopLogo({ className = "" }: { className?: string }) {
+  return (
+    <img
+      src={GREENLOOP_LOGO_SRC}
+      alt="GreenLoop logo"
+      className={`object-contain ${className}`}
+    />
+  );
+}
 
 // ─── Shared Data ─────────────────────────────────────────────────────────────
 
@@ -76,279 +88,289 @@ const BADGES = [
   { label: "Second-hand", labelDe: "Secondhand",    icon: ShoppingBag, color: "#8A3A5C", bg: "#F5DEE9" },
 ];
 
-// 10 real-style Bayreuth partner businesses
+const SUSTAINABILITY_FILTERS = [
+  { label: "Fair supply chain", labelDe: "Faire Lieferkette", icon: Shield, color: "#5C6B2E", bg: "#EEF2DE" },
+  { label: "Regional products", labelDe: "Regionale Produkte", icon: MapPin, color: "#1A6B3E", bg: "#E0F0E8" },
+  { label: "Organic", labelDe: "Bio", icon: Leaf, color: "#2D7A45", bg: "#E8F5EE" },
+  { label: "Fairtrade", labelDe: "Fairtrade", icon: Globe, color: "#5C6B2E", bg: "#EEF2DE" },
+  { label: "Vegan / Vegetarian options", labelDe: "Vegane / vegetarische Optionen", icon: Sparkles, color: "#3A8C55", bg: "#EAF7EF" },
+  { label: "Plastic reduction", labelDe: "Plastikreduktion", icon: Package, color: "#2A5C8A", bg: "#DEE9F5" },
+  { label: "Reusable packaging", labelDe: "Mehrwegverpackung", icon: Recycle, color: "#1E7A6A", bg: "#DEF2EF" },
+  { label: "Sustainable sourcing", labelDe: "Nachhaltige Beschaffung", icon: Check, color: "#0F6B3E", bg: "#E8F5EE" },
+  { label: "Seasonal products", labelDe: "Saisonale Produkte", icon: Calendar, color: "#7A5C1E", bg: "#F7EFDE" },
+];
+
+// Bayreuth partner businesses
 const BUSINESSES = [
   {
     id: 1,
-    name: "Café Herzensfreude",
-    nameDe: "Café Herzensfreude",
-    category: "Café & Bakery",
-    categoryDe: "Café & Bäckerei",
-    address: "Friedrichstraße 15, Bayreuth",
-    phone: "+49 921 123 456",
-    email: "hallo@herzensfreude-bayreuth.de",
+    name: "Vedans Fresh ’n’ Healthy",
+    nameDe: "Vedans Fresh ’n’ Healthy",
+    category: "Vegan / Vegetarian Food",
+    categoryDe: "Veganes / Vegetarisches Essen",
+    address: "Richard-Wagner-Str. 26, 95444 Bayreuth",
+    phone: "Contact details coming soon",
+    email: "Profile details coming soon",
     distance: "0.2 km",
-    badges: ["Organic", "Vegan", "Fair Trade", "Regional"],
+    badges: ["Vegan", "Regional", "Organic"],
     verified: true,
-    image: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=600&h=400&fit=crop&auto=format",
-    description: "A cosy, plant-based café in the heart of Bayreuth. Every dish is made from seasonal, regional ingredients — most within 80 km.",
-    descriptionDe: "Ein gemütliches, pflanzenbasiertes Café im Herzen Bayreuths. Jedes Gericht wird aus saisonalen, regionalen Zutaten zubereitet.",
-    ownerQuote: "\"We believe a cup of coffee should nourish both you and the planet. That is why we source everything with intention.\"",
-    ownerQuoteDe: "\"Wir glauben, dass eine Tasse Kaffee sowohl dich als auch den Planeten nähren sollte.\"",
-    ownerName: "Lisa Hoffmann, Owner",
-    ownerNameDe: "Lisa Hoffmann, Inhaberin",
-    hours: "Mo–Sa 8:00–18:00, So 9:00–15:00",
-    offer: "One free hot drink on your first visit",
-    offerDe: "Ein heißes Getränk gratis bei deinem ersten Besuch",
+    image: "/shops/vedans.jpg",
+    description: "Vegan and vegetarian food, fresh bowls, smoothies, and healthy meals in Bayreuth city centre.",
+    descriptionDe: "Veganes und vegetarisches Essen, frische Bowls, Smoothies und gesunde Mahlzeiten in der Bayreuther Innenstadt.",
+    ownerQuote: "Vegan and vegetarian food, fresh bowls, smoothies, healthy meals.",
+    ownerQuoteDe: "Veganes und vegetarisches Essen, frische Bowls, Smoothies, gesunde Mahlzeiten.",
+    ownerName: "GreenLoop profile note",
+    ownerNameDe: "GreenLoop Profilnotiz",
+    hours: "Opening hours vary",
+    offer: "Show your GreenLoop profile when you visit",
+    offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
-      { author: "Marie K.", text: "The oat latte is wonderful, and the team always explains where the ingredients come from.", textDe: "Der Haferlatte ist wunderbar, und das Team erklärt immer, woher die Zutaten kommen." },
-      { author: "Jonas B.", text: "Warm atmosphere, seasonal food, and a place that feels genuinely connected to Bayreuth.", textDe: "Warme Atmosphäre, saisonales Essen und ein Ort, der sich wirklich mit Bayreuth verbunden fühlt." },
-      { author: "Lena S.", text: "GreenLoop brought me here. I stayed for the walnut cake and the friendly community table.", textDe: "GreenLoop hat mich hergebracht. Geblieben bin ich wegen des Walnusskuchens und des freundlichen Gemeinschaftstischs." },
+      { author: "GreenLoop", text: "Profile ready for verified community notes.", textDe: "Profil bereit für geprüfte Community-Notizen." },
     ],
-    mapX: 162, mapY: 268,
+    mapX: 282, mapY: 275,
   },
   {
     id: 2,
-    name: "Weltladen Bayreuth",
-    nameDe: "Weltladen Bayreuth",
-    category: "Fair Trade Shop",
-    categoryDe: "Fairer Handel",
-    address: "Maxstraße 33, Bayreuth",
-    phone: "+49 921 234 567",
-    email: "info@weltladen-bayreuth.de",
-    distance: "0.4 km",
+    name: "Café Freudenherz",
+    nameDe: "Café Freudenherz",
+    category: "Café & Concept Store",
+    categoryDe: "Café & Concept Store",
+    address: "Sophienstraße 2, 95444 Bayreuth",
+    phone: "Contact details coming soon",
+    email: "Profile details coming soon",
+    distance: "0.3 km",
     badges: ["Fair Trade", "Organic", "Regional"],
     verified: true,
-    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop&auto=format",
-    description: "Bayreuth's original fair trade shop, run by volunteers since 1979. Coffee, chocolate, textiles and handicrafts from over 30 countries.",
-    descriptionDe: "Bayreuths ursprünglicher Weltladen, seit 1979 von Ehrenamtlichen geführt.",
-    ownerQuote: "\"Fair trade is not a label — it is a relationship between people across continents built on dignity.\"",
-    ownerQuoteDe: "\"Fairer Handel ist kein Label — es ist eine Beziehung zwischen Menschen auf verschiedenen Kontinenten.\"",
-    ownerName: "Helga Müller, Ehrenamtliche Leiterin",
-    hours: "Mo–Fr 9:30–18:00, Sa 9:30–14:00",
-    offer: "Free tasting session on your first visit",
-    offerDe: "Kostenlose Verkostung bei deinem ersten Besuch",
+    image: "/shops/freudenherz.jpg",
+    description: "Café, fair fashion, gifts, and selected sustainable and regional products.",
+    descriptionDe: "Café, faire Mode, Geschenke sowie ausgewählte nachhaltige und regionale Produkte.",
+    ownerQuote: "Café, fair fashion, gifts, selected sustainable and regional products.",
+    ownerQuoteDe: "Café, faire Mode, Geschenke, ausgewählte nachhaltige und regionale Produkte.",
+    ownerName: "GreenLoop profile note",
+    ownerNameDe: "GreenLoop Profilnotiz",
+    hours: "Opening hours vary",
+    offer: "Show your GreenLoop profile when you visit",
+    offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
-      { author: "Thomas W.", text: "The coffee here is extraordinary — and knowing the full supply chain makes it taste all the better." },
-      { author: "Anna P.", text: "Run with such care and knowledge. Every volunteer can tell you where every product comes from." },
+      { author: "GreenLoop", text: "Profile ready for verified community notes.", textDe: "Profil bereit für geprüfte Community-Notizen." },
     ],
-    mapX: 96, mapY: 298,
+    mapX: 190, mapY: 236,
   },
   {
     id: 3,
-    name: "Tauschwerk Bayreuth",
-    nameDe: "Tauschwerk Bayreuth",
-    category: "Second-hand & Repair",
-    categoryDe: "Secondhand & Reparatur",
-    address: "Dammallee 5, Bayreuth",
-    phone: "+49 921 345 678",
-    email: "mitmachen@tauschwerk.de",
-    distance: "0.7 km",
-    badges: ["Second-hand", "Upcycled", "Zero Waste"],
+    name: "Die Hamsterbacke",
+    nameDe: "Die Hamsterbacke",
+    category: "Community / Sustainable Food",
+    categoryDe: "Community / Nachhaltige Lebensmittel",
+    address: "Hohenzollernring 67, 95444 Bayreuth",
+    phone: "Contact details coming soon",
+    email: "Profile details coming soon",
+    distance: "0.8 km",
+    badges: ["Regional", "Zero Waste", "Organic"],
     verified: true,
-    image: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&h=400&fit=crop&auto=format",
-    description: "Community swap shop and repair café. Bring what you no longer need, find treasures, and learn to mend with our volunteer repair experts.",
-    descriptionDe: "Gemeinschaftlicher Tauschladen und Repair-Café. Bringe, was du nicht mehr brauchst, und finde neue Schätze.",
-    ownerQuote: "\"The best waste is the waste that never happens. Here we help things live a second, third, fourth life.\"",
-    ownerQuoteDe: "\"Der beste Abfall ist der, der gar nicht erst entsteht. Hier helfen wir Dingen, ein zweites Leben zu führen.\"",
-    ownerName: "Markus Weber, Mitgründer",
-    hours: "Di–So 10:00–18:00",
-    offer: "Free repair session on your first visit",
-    offerDe: "Kostenlose Reparatursitzung bei deinem ersten Besuch",
+    image: "/shops/hamsterbacke.jpg",
+    description: "Local community space with sustainable food and low-waste values.",
+    descriptionDe: "Lokaler Community-Ort mit nachhaltigen Lebensmitteln und Low-Waste-Werten.",
+    ownerQuote: "Local community space, sustainable food and low-waste values.",
+    ownerQuoteDe: "Lokaler Community-Ort, nachhaltige Lebensmittel und Low-Waste-Werte.",
+    ownerName: "GreenLoop profile note",
+    ownerNameDe: "GreenLoop Profilnotiz",
+    hours: "Opening hours vary",
+    offer: "Show your GreenLoop profile when you visit",
+    offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
-      { author: "Clara F.", text: "Brought my broken lamp — fixed in 20 minutes for free. This place is magic." },
-      { author: "Stefan H.", text: "Found a near-perfect leather jacket for €8. The community vibe here is unbeatable." },
+      { author: "GreenLoop", text: "Profile ready for verified community notes.", textDe: "Profil bereit für geprüfte Community-Notizen." },
     ],
-    mapX: 248, mapY: 358,
+    mapX: 105, mapY: 330,
   },
   {
     id: 4,
-    name: "Naturkost am Markt",
-    nameDe: "Naturkost am Markt",
-    category: "Organic Grocery",
-    categoryDe: "Bio-Lebensmittel",
-    address: "Marktplatz 7, Bayreuth",
-    phone: "+49 921 456 789",
-    email: "laden@naturkost-bayreuth.de",
-    distance: "0.5 km",
-    badges: ["Organic", "Regional", "Vegan", "Zero Waste"],
+    name: "Der Weltladen Bayreuth",
+    nameDe: "Der Weltladen Bayreuth",
+    category: "Fair Trade",
+    categoryDe: "Fair Trade",
+    address: "Ludwigstraße 5, 95444 Bayreuth",
+    phone: "Contact details coming soon",
+    email: "Profile details coming soon",
+    distance: "0.4 km",
+    badges: ["Fair Trade", "Regional"],
     verified: true,
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&h=400&fit=crop&auto=format",
-    description: "Certified organic grocery at the historic market square. Loose goods, zero-waste packaging options, and a curated selection of local producers.",
-    descriptionDe: "Bio-Lebensmittelgeschäft am historischen Marktplatz. Lose Waren und lokale Erzeuger.",
-    ownerQuote: "\"Local food is not a trend — it is common sense. We connect Bayreuth people with Bayreuth soil.\"",
-    ownerQuoteDe: "\"Lokale Ernährung ist kein Trend — es ist gesunder Menschenverstand.\"",
-    ownerName: "Petra Schmid, Inhaberin",
-    hours: "Mo–Sa 8:00–19:00",
-    offer: "Free reusable tote bag on your first visit",
-    offerDe: "Gratis Stoffbeutel bei deinem ersten Besuch",
+    image: "/shops/weltladen.jpg",
+    description: "Fair-trade products, ethical consumption, and global responsibility.",
+    descriptionDe: "Fair-Trade-Produkte, ethischer Konsum und globale Verantwortung.",
+    ownerQuote: "Fair-trade products, ethical consumption, global responsibility.",
+    ownerQuoteDe: "Fair-Trade-Produkte, ethischer Konsum, globale Verantwortung.",
+    ownerName: "GreenLoop profile note",
+    ownerNameDe: "GreenLoop Profilnotiz",
+    hours: "Opening hours vary",
+    offer: "Show your GreenLoop profile when you visit",
+    offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
-      { author: "Maria L.", text: "The loose grains section is incredible — zero plastic and everything is labelled with the farm." },
-      { author: "Bernd K.", text: "Most of our weekly shop comes from here now. Quality and transparency are exceptional." },
+      { author: "GreenLoop", text: "Profile ready for verified community notes.", textDe: "Profil bereit für geprüfte Community-Notizen." },
     ],
-    mapX: 178, mapY: 220,
+    mapX: 205, mapY: 280,
   },
   {
     id: 5,
-    name: "Quellpunkt",
-    nameDe: "Quellpunkt",
-    category: "Zero Waste Refill",
-    categoryDe: "Zero-Waste Nachfüllstation",
-    address: "Sophienstraße 31, Bayreuth",
-    phone: "+49 921 567 890",
-    email: "hallo@quellpunkt-bayreuth.de",
-    distance: "1.1 km",
-    badges: ["Refill", "Zero Waste", "Vegan"],
+    name: "Lemon Tree",
+    nameDe: "Lemon Tree",
+    category: "Vegan Food / Fair Fashion",
+    categoryDe: "Veganes Essen / Faire Mode",
+    address: "Sophienstraße 28/30, 95444 Bayreuth",
+    phone: "Contact details coming soon",
+    email: "Profile details coming soon",
+    distance: "0.5 km",
+    badges: ["Vegan", "Fair Trade", "Regional"],
     verified: true,
-    image: "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=600&h=400&fit=crop&auto=format",
-    description: "Bring your own containers and refill cleaning products, shampoos, oils and grains. Plastic-free living made simple and affordable.",
-    descriptionDe: "Bring dein eigenes Behältnis und fülle Reinigungsmittel, Shampoos und Öle nach.",
-    ownerQuote: "\"Convenience and sustainability are not opposites. We prove it every day.\"",
-    ownerQuoteDe: "\"Bequemlichkeit und Nachhaltigkeit sind keine Gegensätze. Das beweisen wir täglich.\"",
-    ownerName: "Sandra Klein, Gründerin",
-    hours: "Mo–Fr 9:00–18:30, Sa 9:00–14:00",
-    offer: "Free starter kit on your first visit",
-    offerDe: "Gratis Starter-Kit bei deinem ersten Besuch",
+    image: "/shops/lemontree.jpg",
+    description: "Vegan food, fair fashion, and sustainable lifestyle products.",
+    descriptionDe: "Veganes Essen, faire Mode und nachhaltige Lifestyle-Produkte.",
+    ownerQuote: "Vegan food, fair fashion, sustainable lifestyle products.",
+    ownerQuoteDe: "Veganes Essen, faire Mode, nachhaltige Lifestyle-Produkte.",
+    ownerName: "GreenLoop profile note",
+    ownerNameDe: "GreenLoop Profilnotiz",
+    hours: "Opening hours vary",
+    offer: "Show your GreenLoop profile when you visit",
+    offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
-      { author: "Ines R.", text: "Switched entirely to refill for my household. Saves money and the planet — perfect." },
-      { author: "Paul M.", text: "Friendly team, clear labelling and excellent selection. My plastic use has dropped 80%." },
+      { author: "GreenLoop", text: "Profile ready for verified community notes.", textDe: "Profil bereit für geprüfte Community-Notizen." },
     ],
-    mapX: 82, mapY: 388,
+    mapX: 170, mapY: 255,
   },
   {
     id: 6,
-    name: "Bio-Bäckerei Krug",
-    nameDe: "Bio-Bäckerei Krug",
-    category: "Organic Bakery",
-    categoryDe: "Bio-Bäckerei",
-    address: "Kulmbacher Str. 12, Bayreuth",
-    phone: "+49 921 678 901",
-    email: "brot@baeckerei-krug.de",
-    distance: "0.8 km",
-    badges: ["Organic", "Regional", "Vegan"],
+    name: "Reformhaus Sattran GmbH",
+    nameDe: "Reformhaus Sattran GmbH",
+    category: "Health Food Store",
+    categoryDe: "Reformhaus / Naturkost",
+    address: "Hohenzollernring 58, 95444 Bayreuth",
+    phone: "Contact details coming soon",
+    email: "Profile details coming soon",
+    distance: "0.7 km",
+    badges: ["Organic", "Vegan", "Regional"],
     verified: true,
-    image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&h=400&fit=crop&auto=format",
-    description: "Fourth-generation artisan bakery, 100% organic. Long-fermented sourdough, ancient grains, and vegan pastries baked fresh every morning.",
-    descriptionDe: "Viertgenerationen-Bäckerei, 100% bio. Langsam fermentiertes Sauerteigbrot und veganes Gebäck.",
-    ownerQuote: "\"Good bread takes time. And the soil it comes from takes even longer to care for.\"",
-    ownerQuoteDe: "\"Gutes Brot braucht Zeit. Und der Boden, aus dem es kommt, braucht noch länger Pflege.\"",
-    ownerName: "Andreas Krug, Inhaber",
-    hours: "Di–Fr 6:00–13:00, Sa 6:00–12:00",
-    offer: "Free bread roll on your first visit",
-    offerDe: "Gratis Brötchen bei deinem ersten Besuch",
+    image: "/shops/reformhaus-sattran.jpg",
+    description: "Organic, natural, and health-oriented products.",
+    descriptionDe: "Bio-, Natur- und gesundheitsorientierte Produkte.",
+    ownerQuote: "Organic, natural and health-oriented products.",
+    ownerQuoteDe: "Bio-, Natur- und gesundheitsorientierte Produkte.",
+    ownerName: "GreenLoop profile note",
+    ownerNameDe: "GreenLoop Profilnotiz",
+    hours: "Opening hours vary",
+    offer: "Show your GreenLoop profile when you visit",
+    offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
-      { author: "Klaus N.", text: "This is what bread should taste like. The rye sourdough is life-changing." },
-      { author: "Sophie T.", text: "Been coming here for years. Consistent quality and a wonderful family atmosphere." },
+      { author: "GreenLoop", text: "Profile ready for verified community notes.", textDe: "Profil bereit für geprüfte Community-Notizen." },
     ],
-    mapX: 296, mapY: 210,
+    mapX: 120, mapY: 315,
   },
   {
     id: 7,
-    name: "Grüne Mode",
-    nameDe: "Grüne Mode",
-    category: "Sustainable Fashion",
-    categoryDe: "Nachhaltige Mode",
-    address: "Opernstraße 22, Bayreuth",
-    phone: "+49 921 789 012",
-    email: "style@gruenemode-bayreuth.de",
-    distance: "0.6 km",
-    badges: ["Fair Trade", "Organic", "Second-hand", "Upcycled"],
+    name: "VerSTOFFlicht",
+    nameDe: "VerSTOFFlicht",
+    category: "Fabric / Sewing / Handmade",
+    categoryDe: "Stoff / Nähen / Handgemacht",
+    address: "Sophienstraße 21, 95444 Bayreuth",
+    phone: "Contact details coming soon",
+    email: "Profile details coming soon",
+    distance: "0.4 km",
+    badges: ["Upcycled", "Regional", "Zero Waste"],
     verified: true,
-    image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&h=400&fit=crop&auto=format",
-    description: "Curated slow fashion boutique combining certified new labels with pre-loved finds. Every piece vetted for ethical production.",
-    descriptionDe: "Kuratierte Slow-Fashion-Boutique. Jedes Stück auf ethische Produktion geprüft.",
-    ownerQuote: "\"Fashion can be beautiful without being harmful. We prove it with every item on our rails.\"",
-    ownerQuoteDe: "\"Mode kann schön sein, ohne zu schaden. Das beweisen wir mit jedem Kleidungsstück.\"",
-    ownerName: "Julia Berger, Stilberaterin",
-    hours: "Mo–Sa 10:00–19:00",
-    offer: "10% off your first purchase",
-    offerDe: "10% Rabatt auf deinen ersten Kauf",
+    image: "/shops/verstofflicht.jpg",
+    description: "Fabrics, handmade goods, repair-oriented making, and creative sustainable consumption.",
+    descriptionDe: "Stoffe, handgemachte Produkte, reparaturorientiertes Gestalten und kreativer nachhaltiger Konsum.",
+    ownerQuote: "Fabrics, handmade goods, repair-oriented and creative sustainable consumption.",
+    ownerQuoteDe: "Stoffe, Handgemachtes, reparaturorientierter und kreativer nachhaltiger Konsum.",
+    ownerName: "GreenLoop profile note",
+    ownerNameDe: "GreenLoop Profilnotiz",
+    hours: "Opening hours vary",
+    offer: "Show your GreenLoop profile when you visit",
+    offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
-      { author: "Lara H.", text: "Found a gorgeous linen dress here — ethical and timeless. Staff are incredibly knowledgeable." },
-      { author: "Max S.", text: "Finally a shop where I can trust every label. The pre-loved section is a goldmine." },
+      { author: "GreenLoop", text: "Profile ready for verified community notes.", textDe: "Profil bereit für geprüfte Community-Notizen." },
     ],
-    mapX: 320, mapY: 320,
+    mapX: 178, mapY: 246,
   },
   {
     id: 8,
-    name: "Stadtgärtnerei Bayreuth",
-    nameDe: "Stadtgärtnerei Bayreuth",
-    category: "Urban Garden & Seeds",
-    categoryDe: "Stadtgärtnerei",
-    address: "Am Stadtpark 3, Bayreuth",
-    phone: "+49 921 890 123",
-    email: "info@stadtgaertnerei-bayreuth.de",
-    distance: "1.4 km",
-    badges: ["Organic", "Regional", "Zero Waste"],
+    name: "Atelier Förster-Oetter",
+    nameDe: "Atelier Förster-Oetter",
+    category: "Atelier / Jewelry / Craft",
+    categoryDe: "Atelier / Schmuck / Handwerk",
+    address: "Hinter der Kirche 9, 95448 Bayreuth",
+    phone: "Contact details coming soon",
+    email: "Profile details coming soon",
+    distance: "1.2 km",
+    badges: ["Regional", "Upcycled"],
     verified: true,
-    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=400&fit=crop&auto=format",
-    description: "Community urban garden and seed library. Grow your own food, swap seeds with neighbours, and join our seasonal gardening workshops.",
-    descriptionDe: "Gemeinschaftsgarten und Samenbibliothek. Baue dein eigenes Essen an.",
-    ownerQuote: "\"A city that grows food is a city that knows where it comes from. We want Bayreuth to be that city.\"",
-    ownerQuoteDe: "\"Eine Stadt, die Essen anbaut, weiß woher es kommt.\"",
-    ownerName: "Felix Braun, Stadtgärtner",
-    hours: "Mi–So 10:00–17:00 (Apr–Okt)",
-    offer: "Free seed pack on your first visit",
-    offerDe: "Gratis Samentüte bei deinem ersten Besuch",
+    image: "/shops/atelier-foerster-oetter.jpg",
+    description: "Local craft, handmade design, and long-lasting products.",
+    descriptionDe: "Lokales Handwerk, handgemachtes Design und langlebige Produkte.",
+    ownerQuote: "Local craft, handmade design, long-lasting products.",
+    ownerQuoteDe: "Lokales Handwerk, handgemachtes Design, langlebige Produkte.",
+    ownerName: "GreenLoop profile note",
+    ownerNameDe: "GreenLoop Profilnotiz",
+    hours: "Opening hours vary",
+    offer: "Show your GreenLoop profile when you visit",
+    offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
-      { author: "Gabi W.", text: "Joined the seed swap last spring. Now my balcony is full of tomatoes — all from here." },
-      { author: "Nina K.", text: "The workshops are excellent. Learnt composting, now I use it every week." },
+      { author: "GreenLoop", text: "Profile ready for verified community notes.", textDe: "Profil bereit für geprüfte Community-Notizen." },
     ],
-    mapX: 60, mapY: 480,
+    mapX: 320, mapY: 355,
   },
   {
     id: 9,
-    name: "Lebensbaum Apotheke",
-    nameDe: "Lebensbaum Apotheke",
-    category: "Natural Pharmacy",
-    categoryDe: "Naturapotheke",
-    address: "Bahnhofstraße 18, Bayreuth",
-    phone: "+49 921 901 234",
-    email: "beratung@lebensbaum-apotheke.de",
-    distance: "0.9 km",
-    badges: ["Organic", "Vegan", "Fair Trade"],
+    name: "TeeGschwendner Bayreuth",
+    nameDe: "TeeGschwendner Bayreuth",
+    category: "Tea Shop",
+    categoryDe: "Teeladen",
+    address: "Maximilianstraße 75, 95444 Bayreuth",
+    phone: "Contact details coming soon",
+    email: "Profile details coming soon",
+    distance: "0.5 km",
+    badges: ["Fair Trade", "Organic"],
     verified: true,
-    image: "https://images.unsplash.com/photo-1563213126-a4273aed2016?w=600&h=400&fit=crop&auto=format",
-    description: "Independent natural pharmacy stocking certified organic supplements, cosmetics, and remedies. Expert herbalism consultations available.",
-    descriptionDe: "Unabhängige Naturapotheke mit zertifizierten Bio-Nahrungsergänzungsmitteln und Kräuterberatungen.",
-    ownerQuote: "\"Health and planet health are inseparable. Every product here reflects that belief.\"",
-    ownerQuoteDe: "\"Gesundheit und Planetengesundheit sind untrennbar. Jedes Produkt hier spiegelt das wider.\"",
-    ownerName: "Dr. Eva Richter, Apothekerin",
-    hours: "Mo–Fr 8:30–18:30, Sa 8:30–13:00",
-    offer: "Free consultation on your first visit",
-    offerDe: "Kostenlose Beratung bei deinem ersten Besuch",
+    image: "/shops/teegschwendner.jpg",
+    description: "Tea, selected quality products, and responsible consumption.",
+    descriptionDe: "Tee, ausgewählte Qualitätsprodukte und verantwortungsvoller Konsum.",
+    ownerQuote: "Tea, selected quality products, responsible consumption.",
+    ownerQuoteDe: "Tee, ausgewählte Qualitätsprodukte, verantwortungsvoller Konsum.",
+    ownerName: "GreenLoop profile note",
+    ownerNameDe: "GreenLoop Profilnotiz",
+    hours: "Opening hours vary",
+    offer: "Show your GreenLoop profile when you visit",
+    offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
-      { author: "Renate B.", text: "Switched to natural cosmetics with Eva's guidance. My skin has never been better." },
-      { author: "Georg H.", text: "Finally a pharmacist who talks about root causes rather than just symptoms." },
+      { author: "GreenLoop", text: "Profile ready for verified community notes.", textDe: "Profil bereit für geprüfte Community-Notizen." },
     ],
-    mapX: 188, mapY: 460,
+    mapX: 142, mapY: 272,
   },
   {
     id: 10,
-    name: "Velo Fahrradwerkstatt",
-    nameDe: "Velo Fahrradwerkstatt",
-    category: "Bike Repair & Sales",
-    categoryDe: "Fahrradwerkstatt",
-    address: "Richard-Wagner-Str. 9, Bayreuth",
-    phone: "+49 921 012 345",
-    email: "rad@velo-bayreuth.de",
+    name: "André Hagen – Der Optiker",
+    nameDe: "André Hagen – Der Optiker",
+    category: "Optician",
+    categoryDe: "Optiker",
+    address: "Richard-Wagner-Straße 32, 95444 Bayreuth",
+    phone: "Contact details coming soon",
+    email: "Profile details coming soon",
     distance: "0.3 km",
-    badges: ["Zero Waste", "Upcycled", "Regional"],
+    badges: ["Regional", "Upcycled"],
     verified: true,
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&auto=format",
-    description: "Community bike repair workshop and sustainable cycle shop. Repair your own bike with our tools, or buy a lovingly restored second-hand model.",
-    descriptionDe: "Fahrradwerkstatt und nachhaltiger Radladen. Repariere dein Rad selbst oder kaufe ein restauriertes Modell.",
-    ownerQuote: "\"Every bike repaired is a car not driven. Small choice, big ripple.\"",
-    ownerQuoteDe: "\"Jedes reparierte Rad ist ein nicht gefahrenes Auto. Kleine Entscheidung, große Wirkung.\"",
-    ownerName: "Tobias Schneider, Radmechaniker",
-    hours: "Mo–Fr 9:00–18:00, Sa 10:00–14:00",
-    offer: "Free safety check on your first visit",
-    offerDe: "Kostenloser Sicherheitscheck bei deinem ersten Besuch",
+    image: "/shops/andre-hagen-optiker.jpg",
+    description: "Local service, repair, long-lasting eyewear, and responsible consumption.",
+    descriptionDe: "Lokaler Service, Reparatur, langlebige Brillen und verantwortungsvoller Konsum.",
+    ownerQuote: "Local service, repair, long-lasting eyewear, responsible consumption.",
+    ownerQuoteDe: "Lokaler Service, Reparatur, langlebige Brillen, verantwortungsvoller Konsum.",
+    ownerName: "GreenLoop profile note",
+    ownerNameDe: "GreenLoop Profilnotiz",
+    hours: "Opening hours vary",
+    offer: "Show your GreenLoop profile when you visit",
+    offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
-      { author: "Chris M.", text: "Fixed my old racer for practically nothing. The do-it-yourself sessions are so empowering." },
-      { author: "Vroni A.", text: "Bought a restored Dutch bike here — perfect condition, fair price. Couldn't be happier." },
+      { author: "GreenLoop", text: "Profile ready for verified community notes.", textDe: "Profil bereit für geprüfte Community-Notizen." },
     ],
-    mapX: 322, mapY: 420,
+    mapX: 296, mapY: 286,
   },
 ];
 
@@ -358,7 +380,7 @@ const EVENTS = [
     title: "Repair Café — Bring Your Broken Things",
     titleDe: "Repair-Café — Bring deine kaputten Sachen",
     date: "Sa, 12. Jul", time: "10:00–14:00",
-    location: "Tauschwerk, Dammallee 5",
+    location: "VerSTOFFlicht, Sophienstraße 21",
     attendees: 34, category: "Workshop",
     image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format",
   },
@@ -376,7 +398,7 @@ const EVENTS = [
     title: "Zero Waste Kitchen — Cooking Workshop",
     titleDe: "Zero-Waste-Küche — Kochworkshop",
     date: "Mi, 16. Jul", time: "18:00–20:30",
-    location: "Quellpunkt, Sophienstraße 31",
+    location: "Vedans Fresh ’n’ Healthy, Richard-Wagner-Str. 26",
     attendees: 12, category: "Food",
     image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=250&fit=crop&auto=format",
   },
@@ -395,19 +417,6 @@ function Badge({ label, lang = "en", small = false }: { label: string; lang?: La
     >
       <Icon size={small ? 9 : 11} />
       {displayLabel}
-    </span>
-  );
-}
-
-function VerifiedBadge({ small = false, lang = "en" }: { small?: boolean; lang?: Lang }) {
-  const label = lang === "de" ? "GreenLoop Geprüft" : "GreenLoop Verified";
-  return (
-    <span
-      className={`inline-flex items-center gap-1 rounded-full font-semibold ${small ? "px-2 py-0.5 text-[10px]" : "px-2.5 py-1 text-xs"}`}
-      style={{ background: "#0F6B3E", color: "#fff" }}
-    >
-      <Check size={small ? 9 : 10} strokeWidth={3} />
-      {label}
     </span>
   );
 }
@@ -449,9 +458,8 @@ function QRCode({ size = 176 }: { size?: number }) {
       {[[10,24,38,52,73,87,101,115,129,143,164,178,192],[17,31,45,59,80,94,108,122,136,150,171,185,199],[10,38,52,66,73,87,115,129,157,164,178],[24,31,45,59,80,94,101,108,136,143,150,171,192,199],[10,17,52,66,73,87,115,122,129,157,164,185],[31,38,45,59,94,101,108,136,143,150,178,192,199],[10,24,38,52,66,80,87,122,129,157,171,185],[17,31,45,59,73,94,101,108,136,143,150,164,178,192],[10,38,52,66,80,87,115,129,157,164,185,199]].map((cols,ri)=>cols.map(x=><rect key={`ra${ri}_${x}`} x={x} y={73+ri*7} width="7" height="7" fill="#111"/>))}
       {[[10,17,31,52,66,80,87,108,115,129,143,164,178,199],[24,38,45,59,73,94,101,122,136,150,157,171,185,192],[10,31,52,66,80,87,108,115,143,150,164,178],[17,24,38,45,59,73,94,101,129,136,157,171,185,199],[10,31,52,66,73,80,108,122,143,150,164,192],[17,24,38,45,59,87,94,101,115,129,136,157,178,199],[10,31,45,52,66,80,108,115,143,164,171,185],[17,24,38,59,73,87,94,101,122,129,150,157,178,192,199],[10,31,52,66,80,87,108,115,136,143,164,171,185]].map((cols,ri)=>cols.map(x=><rect key={`rb${ri}_${x}`} x={x} y={136+ri*7} width="7" height="7" fill="#111"/>))}
       {/* GreenLoop brand mark */}
-      <rect x="91" y="91" width="28" height="28" rx="4" fill="white"/>
-      <rect x="93" y="93" width="24" height="24" rx="3" fill="#0F6B3E"/>
-      <text x="105" y="109" textAnchor="middle" fill="white" fontSize="13" fontWeight="bold" fontFamily="sans-serif">G</text>
+      <rect x="88" y="88" width="34" height="34" rx="5" fill="white"/>
+      <image href={GREENLOOP_LOGO_SRC} x="91" y="91" width="28" height="28" preserveAspectRatio="xMidYMid meet" />
     </svg>
   );
 }
@@ -534,23 +542,19 @@ function ScreenWelcome({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => vo
         </div>
 
         <div className="flex flex-col items-center text-center mt-8 flex-1">
-          <div className="w-20 h-20 rounded-3xl bg-white flex items-center justify-center mb-6 shadow-xl">
-            <div className="flex items-center gap-0.5">
-              <TreePine size={28} color="#0F6B3E" strokeWidth={2} />
-              <div className="w-2 h-2 rounded-full bg-[#0F6B3E] -mt-3" />
-            </div>
+          <div className="w-24 h-24 rounded-3xl bg-white flex items-center justify-center mb-6 shadow-xl p-3">
+            <GreenLoopLogo className="w-full h-full" />
           </div>
           <h1 className="text-4xl font-bold text-white mb-2" style={{ fontFamily: "'Lora', serif", lineHeight: 1.1 }}>GreenLoop</h1>
-          <p className="text-sm text-white/70 font-medium tracking-widest uppercase mb-10">Bayreuth</p>
 
           <div className="w-full rounded-3xl p-6 mb-6" style={{ background: "rgba(255,255,255,0.12)" }}>
             <p className="text-white text-lg font-medium leading-snug mb-2" style={{ fontFamily: "'Lora', serif" }}>
-              {lang === "de" ? "Entdecke Bayreuths nachhaltigste Orte." : "Discover your city's most sustainable places."}
+              {lang === "de" ? "Entdecke nachhaltige Orte in deiner Nähe." : "Discover your city's most sustainable places."}
             </p>
             <p className="text-white/70 text-sm">
               {lang === "de"
-                ? "Geprüfte Läden, Cafés und Dienstleistungen — alle für ein grüneres Bayreuth."
-                : "Verified shops, cafés, and services — all committed to a greener Bayreuth."}
+                ? "Wir verbinden Communities durch nachhaltige lokale Entscheidungen."
+                : "Connecting communities through sustainable local choices."}
             </p>
           </div>
 
@@ -608,8 +612,8 @@ function ScreenHome({ lang }: { lang: Lang }) {
             <p className="text-white/80 text-xs font-semibold uppercase tracking-wide mb-1">{t.welcomeBack}</p>
             <p className="text-white text-sm leading-relaxed">
               {lang === "de"
-                ? "10 geprüfte Partner in Bayreuth warten auf dich — lokal, nachhaltig, ehrlich."
-                : "10 verified partners in Bayreuth are waiting — local, sustainable, honest."}
+                ? "10 geprüfte Partner warten auf dich — lokal, nachhaltig, ehrlich."
+                : "10 verified partners are waiting — local, sustainable, honest."}
             </p>
             <button className="mt-3 px-4 py-1.5 rounded-xl bg-white text-[#0F6B3E] text-xs font-bold">
               {lang === "de" ? "Alle entdecken" : "Explore all"}
@@ -619,8 +623,8 @@ function ScreenHome({ lang }: { lang: Lang }) {
           {/* Categories */}
           <div className="flex gap-2 overflow-x-auto pb-1 mb-1">
             {(lang === "de"
-              ? ["Alle", "Café", "Bio", "Secondhand", "Fairer Handel", "Nachfüllbar"]
-              : ["All", "Café", "Organic", "Second-hand", "Fair Trade", "Refill"]
+              ? ["Alle", "Vegan", "Café", "Fair Trade", "Handwerk", "Restaurants"]
+              : ["All", "Vegan", "Café", "Fair Trade", "Craft", "Restaurants"]
             ).map((c, i) => (
               <button key={c} className="flex-shrink-0 px-4 py-2 rounded-full text-xs font-semibold"
                 style={i === 0 ? { background: "#0F6B3E", color: "#fff" } : { background: "#fff", color: "#1A2E1A", border: "1px solid rgba(15,107,62,0.15)" }}>
@@ -642,8 +646,7 @@ function ScreenHome({ lang }: { lang: Lang }) {
           {BUSINESSES.slice(0, 2).map((b) => (
             <div key={b.id} className="rounded-2xl bg-white overflow-hidden" style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.07)" }}>
               <div className="relative h-32">
-                <img src={b.image} alt={b.name} className="w-full h-full object-cover" />
-                <div className="absolute top-3 left-3"><VerifiedBadge small lang={lang} /></div>
+                <ImageWithFallback src={b.image} alt={b.name} className="w-full h-full object-cover" />
                 <button className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center">
                   <Heart size={14} color="#6B7B6B" />
                 </button>
@@ -675,68 +678,40 @@ function ScreenHome({ lang }: { lang: Lang }) {
 // Screen 3: Map Explore
 function ScreenMap({ lang }: { lang: Lang }) {
   const t = T[lang];
-  const allPins = BUSINESSES.map((b, i) => ({ ...b, active: i === 0 }));
+  const mapPinPositions = [
+    { x: 246, y: 260 },
+    { x: 142, y: 188 },
+    { x: 80, y: 316 },
+    { x: 200, y: 222 },
+    { x: 150, y: 246 },
+    { x: 96, y: 276 },
+    { x: 176, y: 166 },
+    { x: 318, y: 336 },
+    { x: 114, y: 226 },
+    { x: 288, y: 286 },
+  ];
+  const allPins = BUSINESSES.map((b, i) => ({
+    ...b,
+    active: i === 0,
+    visualX: mapPinPositions[i].x,
+    visualY: mapPinPositions[i].y,
+  }));
 
   return (
     <MobileFrame bg="#EAE6DE">
       <div className="flex flex-col h-full relative">
         {/* Map canvas */}
         <div className="absolute inset-0">
-          <svg width="393" height="852" viewBox="0 0 393 852" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
-            <rect width="393" height="852" fill="#EAE6DE" />
-            {/* Parks */}
-            <ellipse cx="58" cy="480" rx="52" ry="38" fill="#C8DCBA" opacity="0.9" />
-            <ellipse cx="340" cy="560" rx="40" ry="30" fill="#C8DCBA" opacity="0.8" />
-            <rect x="200" y="490" width="70" height="55" rx="12" fill="#C8DCBA" opacity="0.85" />
-            {[[50,470],[62,482],[52,492],[72,474],[44,488],[200,500],[220,510],[210,520],[232,500],[336,555],[348,567]].map(([px,py],i)=>(
-              <circle key={i} cx={px} cy={py} r="4" fill="#A8C894" opacity="0.9" />
-            ))}
-            <text x="52" y="510" fill="#5A7A42" fontSize="7" fontWeight="600" fontFamily="DM Sans, sans-serif" opacity="0.85">Stadtpark</text>
-            {/* River */}
-            <path d="M0 395 Q40 388 80 395 Q120 402 160 394 Q200 386 240 393 Q280 400 320 391 Q360 382 393 390 L393 410 Q360 402 320 411 Q280 420 240 413 Q200 406 160 414 Q120 422 80 415 Q40 408 0 415 Z" fill="#AECFE0" opacity="0.75" />
-            <text x="90" y="408" fill="#5A90A8" fontSize="7" fontFamily="DM Sans, sans-serif" fontStyle="italic" opacity="0.9">Roter Main</text>
-            {/* Buildings */}
-            <rect x="170" y="190" width="88" height="65" rx="5" fill="#D8D2C8" opacity="0.9" />
-            <rect x="175" y="195" width="78" height="55" rx="4" fill="#CCC6BC" opacity="0.6" />
-            <rect x="55" y="320" width="60" height="45" rx="5" fill="#D8D2C8" opacity="0.85" />
-            <rect x="295" y="255" width="70" height="55" rx="5" fill="#D8D2C8" opacity="0.85" />
-            <rect x="60" y="175" width="75" height="50" rx="5" fill="#D8D2C8" opacity="0.8" />
-            <rect x="280" y="455" width="65" height="50" rx="5" fill="#D8D2C8" opacity="0.8" />
-            <rect x="160" y="640" width="80" height="60" rx="5" fill="#D8D2C8" opacity="0.75" />
-            {/* Arteries */}
-            <line x1="0" y1="280" x2="393" y2="280" stroke="#F8F4EE" strokeWidth="14" />
-            <line x1="0" y1="280" x2="393" y2="280" stroke="#E8E2D8" strokeWidth="10" />
-            <line x1="0" y1="180" x2="393" y2="340" stroke="#F8F4EE" strokeWidth="11" />
-            <line x1="0" y1="180" x2="393" y2="340" stroke="#E8E2D8" strokeWidth="7.5" />
-            <line x1="155" y1="0" x2="155" y2="852" stroke="#F8F4EE" strokeWidth="13" />
-            <line x1="155" y1="0" x2="155" y2="852" stroke="#E8E2D8" strokeWidth="9" />
-            <line x1="295" y1="0" x2="295" y2="852" stroke="#F8F4EE" strokeWidth="10" />
-            <line x1="295" y1="0" x2="295" y2="852" stroke="#E8E2D8" strokeWidth="7" />
-            {/* Secondary */}
-            <line x1="0" y1="430" x2="393" y2="430" stroke="#EDE8E0" strokeWidth="7" />
-            <line x1="0" y1="540" x2="393" y2="540" stroke="#EDE8E0" strokeWidth="6" />
-            <line x1="65" y1="0" x2="65" y2="852" stroke="#EDE8E0" strokeWidth="6" />
-            <line x1="230" y1="0" x2="230" y2="852" stroke="#EDE8E0" strokeWidth="6" />
-            <line x1="350" y1="0" x2="350" y2="852" stroke="#EDE8E0" strokeWidth="5" />
-            <path d="M0 600 Q100 720 200 700 Q300 680 393 720" stroke="#EDE8E0" strokeWidth="7" fill="none" />
-            {/* Tertiary */}
-            <line x1="0" y1="340" x2="393" y2="340" stroke="#E4DFD6" strokeWidth="4" />
-            <line x1="120" y1="0" x2="120" y2="852" stroke="#E4DFD6" strokeWidth="4" />
-            <line x1="190" y1="0" x2="190" y2="852" stroke="#E4DFD6" strokeWidth="3" />
-            <line x1="260" y1="0" x2="260" y2="852" stroke="#E4DFD6" strokeWidth="3" />
-            {/* Road labels */}
-            <text x="28" y="274" fill="#9A948A" fontSize="7.5" fontFamily="DM Sans, sans-serif" fontWeight="600" opacity="0.9">Maxstraße</text>
-            <text x="162" y="140" fill="#9A948A" fontSize="7.5" fontFamily="DM Sans, sans-serif" fontWeight="600" opacity="0.9" transform="rotate(90,162,140)">Ludwigstraße</text>
-            <text x="302" y="130" fill="#9A948A" fontSize="7" fontFamily="DM Sans, sans-serif" opacity="0.85" transform="rotate(90,302,130)">Sophienstraße</text>
-            {/* Neighbourhood labels */}
-            <text x="155" y="158" fill="#6A6460" fontSize="10" fontFamily="DM Sans, sans-serif" fontWeight="700" opacity="0.55" textAnchor="middle" letterSpacing="2">INNENSTADT</text>
-            <text x="78" y="238" fill="#6A6460" fontSize="8" fontFamily="DM Sans, sans-serif" fontWeight="600" opacity="0.45" textAnchor="middle" letterSpacing="1">ST. GEORGEN</text>
-          </svg>
+          <ImageWithFallback
+            src={BAYREUTH_MAP_SRC}
+            alt="Bayreuth map"
+            className="w-full h-full object-cover object-center"
+          />
 
           {/* All 10 business pins */}
           {allPins.map((pin, idx) => (
             <div key={pin.id} className="absolute"
-              style={{ left: pin.mapX - (pin.active ? 22 : 17), top: pin.mapY - (pin.active ? 50 : 42), zIndex: pin.active ? 10 : 5 }}>
+              style={{ left: pin.visualX - (pin.active ? 22 : 17), top: pin.visualY - (pin.active ? 50 : 42), zIndex: pin.active ? 10 : 5 }}>
               {pin.active && (
                 <div className="absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-1 rounded-lg text-white font-semibold"
                   style={{ fontSize: 9, background: "#0F6B3E", boxShadow: "0 2px 8px rgba(15,107,62,0.35)" }}>
@@ -780,8 +755,8 @@ function ScreenMap({ lang }: { lang: Lang }) {
           </div>
           <div className="flex gap-2 overflow-x-auto pb-0.5">
             {(lang === "de"
-              ? ["Alle","Bio","Nachfüllbar","Café","Secondhand"]
-              : ["All","Organic","Refill","Café","Second-hand"]
+              ? ["Alle","Vegan","Fair Trade","Café","Handwerk"]
+              : ["All","Vegan","Fair Trade","Café","Craft"]
             ).map((c, i) => (
               <button key={c} className="flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold"
                 style={i === 0
@@ -819,9 +794,8 @@ function ScreenMap({ lang }: { lang: Lang }) {
           <div className="mx-4 mb-3 rounded-3xl bg-white p-4" style={{ boxShadow: "0 -8px 40px rgba(0,0,0,0.14)" }}>
             <div className="flex justify-center mb-3"><div className="w-10 h-1 rounded-full bg-[#D4D8D4]" /></div>
             <div className="flex gap-3.5">
-              <img src={BUSINESSES[0].image} alt={BUSINESSES[0].name} className="w-20 h-20 rounded-2xl object-cover flex-shrink-0" />
+              <ImageWithFallback src={BUSINESSES[0].image} alt={BUSINESSES[0].name} className="w-20 h-20 rounded-2xl object-cover flex-shrink-0" />
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1"><VerifiedBadge small lang={lang} /></div>
                 <h4 className="font-bold text-[#1A2E1A] text-sm leading-tight">{lang === "de" ? BUSINESSES[0].nameDe : BUSINESSES[0].name}</h4>
                 <p className="text-xs text-[#6B7B6B] mb-1.5">{lang === "de" ? BUSINESSES[0].categoryDe : BUSINESSES[0].category} · {BUSINESSES[0].distance}</p>
                 <div className="flex gap-1">{BUSINESSES[0].badges.slice(0,2).map(b => <Badge key={b} label={b} lang={lang} small />)}</div>
@@ -859,8 +833,8 @@ function ScreenDiscover({ lang }: { lang: Lang }) {
           </div>
           <div className="flex gap-2 overflow-x-auto pb-1">
             {(lang === "de"
-              ? ["Alle","Essen & Trinken","Mode","Gesundheit","Haus","Dienstleistungen"]
-              : ["All","Food & Drink","Fashion","Health","Home","Services"]
+              ? ["Alle","Essen & Trinken","Café & Geschenke","Fair Trade","Handwerk","Restaurants"]
+              : ["All","Food & Drink","Café & Gifts","Fair Trade","Craft & Handmade","Restaurants"]
             ).map((c, i) => (
               <button key={c} className="flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold"
                 style={i === 0 ? { background: "#0F6B3E", color: "#fff" } : { background: "#fff", color: "#1A2E1A", border: "1px solid rgba(15,107,62,0.15)" }}>
@@ -873,9 +847,8 @@ function ScreenDiscover({ lang }: { lang: Lang }) {
         <div className="px-5 flex flex-col gap-3 pb-4">
           {BUSINESSES.slice(0, 6).map((b) => (
             <div key={b.id} className="rounded-2xl bg-white overflow-hidden flex gap-3 p-3" style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
-              <img src={b.image} alt={b.name} className="w-24 h-24 rounded-xl object-cover flex-shrink-0" />
+              <ImageWithFallback src={b.image} alt={b.name} className="w-24 h-24 rounded-xl object-cover flex-shrink-0" />
               <div className="flex-1 min-w-0 py-0.5">
-                <div className="flex items-center gap-1.5 mb-1"><VerifiedBadge small lang={lang} /></div>
                 <h4 className="font-bold text-[#1A2E1A] text-sm leading-tight">{lang === "de" ? b.nameDe : b.name}</h4>
                 <p className="text-[11px] text-[#6B7B6B] mt-0.5">{lang === "de" ? b.categoryDe : b.category}</p>
                 <div className="flex items-center gap-2 mt-1 mb-2">
@@ -898,7 +871,7 @@ function ScreenDiscover({ lang }: { lang: Lang }) {
 // Screen 5: Filter
 function ScreenFilter({ lang }: { lang: Lang }) {
   const t = T[lang];
-  const [selected, setSelected] = useState<string[]>(["Organic", "Vegan"]);
+  const [selected, setSelected] = useState<string[]>(["Organic", "Vegan / Vegetarian options"]);
   const toggle = (l: string) => setSelected((s) => s.includes(l) ? s.filter((x) => x !== l) : [...s, l]);
   return (
     <MobileFrame>
@@ -926,8 +899,8 @@ function ScreenFilter({ lang }: { lang: Lang }) {
             <h3 className="font-bold text-[#1A2E1A] text-sm mb-3">{t.category}</h3>
             <div className="flex gap-2 flex-wrap">
               {(lang==="de"
-                ?["Alle","Essen & Trinken","Mode","Gesundheit","Haus","Dienstleistungen"]
-                :["All","Food & Drink","Fashion","Health","Home","Services"]
+                ?["Alle","Essen & Trinken","Café & Geschenke","Fair Trade","Handwerk","Restaurants"]
+                :["All","Food & Drink","Café & Gifts","Fair Trade","Craft & Handmade","Restaurants"]
               ).map((c,i)=>(
                 <button key={c} className="px-3 py-2 rounded-xl text-xs font-semibold"
                   style={i===0?{background:"#0F6B3E",color:"#fff"}:{background:"#fff",color:"#1A2E1A",border:"1px solid rgba(15,107,62,0.2)"}}>
@@ -940,7 +913,7 @@ function ScreenFilter({ lang }: { lang: Lang }) {
           <div className="mb-5">
             <h3 className="font-bold text-[#1A2E1A] text-sm mb-3">{t.sustainability}</h3>
             <div className="grid grid-cols-2 gap-2">
-              {BADGES.map((b) => {
+              {SUSTAINABILITY_FILTERS.map((b) => {
                 const Icon = b.icon;
                 const active = selected.includes(b.label);
                 const displayLabel = lang === "de" ? b.labelDe : b.label;
@@ -970,16 +943,16 @@ function ScreenFilter({ lang }: { lang: Lang }) {
   );
 }
 
-// Screen 6: Business Profile — Café Herzensfreude
+// Screen 6: Business Profile
 function ScreenBusinessProfile({ lang }: { lang: Lang }) {
   const t = T[lang];
-  const b = BUSINESSES[0]; // Café Herzensfreude
+  const b = BUSINESSES[0];
   return (
     <MobileFrame>
       <div className="flex flex-col h-full">
         {/* Hero */}
         <div className="relative h-52 flex-shrink-0">
-          <img src={b.image} alt={b.name} className="w-full h-full object-cover" />
+          <ImageWithFallback src={b.image} alt={b.name} className="w-full h-full object-cover" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 40%, rgba(26,46,26,0.75) 100%)" }} />
           <button className="absolute top-4 left-4 w-10 h-10 rounded-2xl bg-white/90 flex items-center justify-center">
             <ChevronLeft size={20} color="#1A2E1A" />
@@ -987,9 +960,6 @@ function ScreenBusinessProfile({ lang }: { lang: Lang }) {
           <button className="absolute top-4 right-4 w-10 h-10 rounded-2xl bg-white/90 flex items-center justify-center">
             <Heart size={18} color="#1A2E1A" />
           </button>
-          <div className="absolute bottom-3 left-4 flex gap-2 items-center">
-            <VerifiedBadge lang={lang} />
-          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto px-5 pt-3">
@@ -997,6 +967,14 @@ function ScreenBusinessProfile({ lang }: { lang: Lang }) {
           <div className="mb-3">
             <h2 className="text-xl font-bold text-[#1A2E1A] leading-tight" style={{ fontFamily: "'Lora', serif" }}>{lang === "de" ? b.nameDe : b.name}</h2>
             <p className="text-sm text-[#6B7B6B] mt-1">{lang === "de" ? b.categoryDe : b.category}</p>
+          </div>
+
+          {/* Sustainability criteria */}
+          <div className="rounded-2xl p-3 mb-3" style={{ background: "#E8F5EE" }}>
+            <h3 className="font-bold text-[#1A2E1A] text-sm mb-2">{t.verifiedCriteria}</h3>
+            <div className="flex gap-1.5 flex-wrap">
+              {b.badges.map((badge) => <Badge key={badge} label={badge} lang={lang} />)}
+            </div>
           </div>
 
           {/* Contact + hours row */}
@@ -1020,13 +998,7 @@ function ScreenBusinessProfile({ lang }: { lang: Lang }) {
 
           {/* Map mini */}
           <div className="rounded-2xl overflow-hidden mb-4" style={{ height: 80, background: "#E8F0EB", position: "relative" }}>
-            <svg width="100%" height="80" viewBox="0 0 343 80">
-              <rect width="343" height="80" fill="#E8F0EB" />
-              <line x1="0" y1="40" x2="343" y2="40" stroke="#E8E2D8" strokeWidth="8" />
-              <line x1="120" y1="0" x2="120" y2="80" stroke="#E8E2D8" strokeWidth="6" />
-              <line x1="220" y1="0" x2="220" y2="80" stroke="#E8E2D8" strokeWidth="5" />
-              <rect x="130" y="15" width="70" height="45" rx="5" fill="#D8D2C8" opacity="0.8" />
-            </svg>
+            <ImageWithFallback src={BAYREUTH_MAP_SRC} alt="Bayreuth map" className="w-full h-full object-cover" />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 rounded-xl bg-[#0F6B3E] flex items-center justify-center shadow-lg">
                 <MapPin size={14} color="#fff" />
@@ -1034,14 +1006,6 @@ function ScreenBusinessProfile({ lang }: { lang: Lang }) {
             </div>
             <div className="absolute bottom-2 left-3">
               <span className="text-[10px] text-[#6B7B6B] font-medium">{b.address}</span>
-            </div>
-          </div>
-
-          {/* Sustainability criteria */}
-          <div className="mb-4">
-            <h3 className="font-bold text-[#1A2E1A] text-sm mb-2">{t.verifiedCriteria}</h3>
-            <div className="flex gap-1.5 flex-wrap">
-              {b.badges.map((badge) => <Badge key={badge} label={badge} lang={lang} />)}
             </div>
           </div>
 
@@ -1099,24 +1063,58 @@ function ScreenBusinessProfile({ lang }: { lang: Lang }) {
 function ScreenSustainabilityInfo({ lang }: { lang: Lang }) {
   const t = T[lang];
   const b = BUSINESSES[0];
-  const criteria = [
-    { ...BADGES[0], title: lang === "de" ? "Zertifiziert Bio" : "Certified Organic",
-      desc: lang === "de"
-        ? "Alle Produkte erfüllen die EU-Bio-Verordnung (DE-ÖKO-001). Keine synthetischen Pestizide oder Düngemittel."
-        : "All products meet EU organic certification (DE-ÖKO-001). No synthetic pesticides or fertilisers used." },
-    { ...BADGES[2], title: lang === "de" ? "Fairer Handel" : "Fair Trade",
-      desc: lang === "de"
-        ? "Kaffeebohnen direkt von Fairtrade-zertifizierten Kooperativen. Faire Löhne, faire Bedingungen."
-        : "Coffee beans sourced directly from Fairtrade-certified cooperatives. Fair wages, fair conditions." },
-    { ...BADGES[1], title: lang === "de" ? "Regionale Zutaten" : "Regional Sourcing",
-      desc: lang === "de"
-        ? "80 %+ der Zutaten kommen aus einem Umkreis von 100 km rund um Bayreuth — von namentlich genannten Partnerbetrieben."
-        : "80%+ of ingredients sourced within 100 km of Bayreuth from named partner farms and producers." },
-    { ...BADGES[3], title: lang === "de" ? "Vollständig vegan" : "100% Vegan",
-      desc: lang === "de"
-        ? "Kein Fleisch, keine Tierprodukte oder Tierversuche in irgendeiner Phase der Produktion oder Lieferkette."
-        : "No animal products, by-products, or testing at any stage of production or supply chain." },
-  ];
+  const criteriaCopy: Record<string, { title: string; titleDe: string; desc: string; descDe: string }> = {
+    Organic: {
+      title: "Organic and natural products",
+      titleDe: "Bio- und Naturprodukte",
+      desc: "This profile highlights organic, natural, or health-oriented product choices.",
+      descDe: "Dieses Profil hebt Bio-, Natur- oder gesundheitsorientierte Produktauswahl hervor.",
+    },
+    Regional: {
+      title: "Local and regional connection",
+      titleDe: "Lokale und regionale Verankerung",
+      desc: "This business contributes to Bayreuth's local economy and neighbourhood life.",
+      descDe: "Dieser Betrieb stärkt Bayreuths lokale Wirtschaft und das Leben im Viertel.",
+    },
+    "Fair Trade": {
+      title: "Fair trade and ethical consumption",
+      titleDe: "Fair Trade und ethischer Konsum",
+      desc: "This profile includes fair-trade, ethical, or responsibility-focused consumption.",
+      descDe: "Dieses Profil umfasst Fair Trade, ethischen Konsum oder verantwortungsvolle Produktauswahl.",
+    },
+    Vegan: {
+      title: "Vegan and plant-forward choices",
+      titleDe: "Vegane und pflanzenbasierte Auswahl",
+      desc: "This profile includes vegan, vegetarian, or plant-forward food and lifestyle choices.",
+      descDe: "Dieses Profil umfasst vegane, vegetarische oder pflanzenbasierte Food- und Lifestyle-Angebote.",
+    },
+    "Zero Waste": {
+      title: "Low-waste values",
+      titleDe: "Low-Waste-Werte",
+      desc: "This profile includes low-waste, reuse, or waste-reduction values.",
+      descDe: "Dieses Profil umfasst Low-Waste-, Wiederverwendungs- oder Abfallvermeidungswerte.",
+    },
+    Upcycled: {
+      title: "Repair and long-lasting use",
+      titleDe: "Reparatur und lange Nutzung",
+      desc: "This profile supports repair-oriented, handmade, upcycled, or long-lasting consumption.",
+      descDe: "Dieses Profil unterstützt reparaturorientierten, handgemachten, upgecycelten oder langlebigen Konsum.",
+    },
+  };
+  const criteria = b.badges.map((badge) => {
+    const badgeConfig = BADGES.find((item) => item.label === badge) ?? BADGES[0];
+    const copy = criteriaCopy[badge] ?? {
+      title: badgeConfig.label,
+      titleDe: badgeConfig.labelDe,
+      desc: b.description,
+      descDe: b.descriptionDe,
+    };
+    return {
+      ...badgeConfig,
+      title: lang === "de" ? copy.titleDe : copy.title,
+      desc: lang === "de" ? copy.descDe : copy.desc,
+    };
+  });
 
   return (
     <MobileFrame>
@@ -1134,7 +1132,6 @@ function ScreenSustainabilityInfo({ lang }: { lang: Lang }) {
             <h3 className="font-bold text-[#1A2E1A] text-sm">{lang === "de" ? b.nameDe : b.name}</h3>
             <p className="text-xs text-[#6B7B6B]">{lang === "de" ? b.categoryDe : b.category}</p>
           </div>
-          <div className="ml-auto"><VerifiedBadge small lang={lang} /></div>
         </div>
 
         {/* What does verification mean */}
@@ -1142,7 +1139,7 @@ function ScreenSustainabilityInfo({ lang }: { lang: Lang }) {
           <div className="flex items-center gap-2 mb-2">
             <Shield size={16} color="#0F6B3E" />
             <span className="font-bold text-[#0F6B3E] text-sm">
-              {lang === "de" ? "Was bedeutet GreenLoop Geprüft?" : "What does GreenLoop Verified mean?"}
+              {lang === "de" ? "Was bedeutet Verifizierung?" : "What does verification mean?"}
             </span>
           </div>
           <p className="text-xs text-[#3A4A3A] leading-relaxed">
@@ -1180,7 +1177,7 @@ function ScreenSustainabilityInfo({ lang }: { lang: Lang }) {
   );
 }
 
-// Screen 8: First Visit Offer — Café Herzensfreude
+// Screen 8: First Visit Offer
 function ScreenOffer({ lang }: { lang: Lang }) {
   const t = T[lang];
   const b = BUSINESSES[0];
@@ -1204,7 +1201,6 @@ function ScreenOffer({ lang }: { lang: Lang }) {
               <h3 className="font-bold text-[#1A2E1A] text-sm">{lang === "de" ? b.nameDe : b.name}</h3>
               <p className="text-xs text-[#6B7B6B]">{lang === "de" ? b.categoryDe : b.category}</p>
             </div>
-            <VerifiedBadge small lang={lang} />
           </div>
 
           {/* Offer highlight */}
@@ -1216,7 +1212,11 @@ function ScreenOffer({ lang }: { lang: Lang }) {
           {/* QR Code */}
           <div className="flex justify-center mb-3">
             <div className="rounded-2xl p-3 bg-white inline-block" style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.10)" }}>
-              <QRCode size={172} />
+              <img
+                src="/qrcode/qrcode.jpeg"
+                alt="First visit offer QR code"
+                className="w-[172px] h-[172px] object-contain"
+              />
             </div>
           </div>
           <p className="text-center text-xs text-[#6B7B6B]">{t.validUntil}</p>
@@ -1289,19 +1289,6 @@ function ScreenCommunity({ lang }: { lang: Lang }) {
           ))}
         </div>
 
-        <div className="mx-5 mb-2 p-4 rounded-2xl" style={{ background: "#E8F5EE" }}>
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0F6B3E] flex items-center justify-center flex-shrink-0">
-              <Plus size={20} color="#fff" />
-            </div>
-            <div>
-              <p className="font-bold text-[#1A2E1A] text-sm">{t.hostEvent}</p>
-              <p className="text-xs text-[#6B7B6B]">{t.hostEventSub}</p>
-            </div>
-            <ChevronRight size={16} color="#0F6B3E" className="ml-auto" />
-          </div>
-        </div>
-
         <div className="mt-auto"><BottomNav active={T[lang].community} lang={lang} /></div>
       </div>
     </MobileFrame>
@@ -1331,10 +1318,9 @@ function ScreenProfile({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => vo
             </div>
           </div>
 
-          {/* Stats — visits + saved only, no CO₂ */}
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          {/* Saved stat */}
+          <div className="grid grid-cols-1 gap-3 mb-5">
             {[
-              { value: "47", label: t.visits },
               { value: "8",  label: t.saved },
             ].map((s) => (
               <div key={s.label} className="rounded-2xl p-4 text-center bg-white" style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
@@ -1395,7 +1381,7 @@ function ScreenProfile({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => vo
             <div className="flex flex-col gap-2.5">
               {BUSINESSES.slice(0, 3).map((b) => (
                 <div key={b.id} className="flex items-center gap-3 rounded-2xl bg-white p-3" style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}>
-                  <img src={b.image} alt={b.name} className="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
+                  <ImageWithFallback src={b.image} alt={b.name} className="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-[#1A2E1A] text-sm">{lang === "de" ? b.nameDe : b.name}</h4>
                     <p className="text-xs text-[#6B7B6B]">{lang === "de" ? b.categoryDe : b.category}</p>
@@ -1450,11 +1436,10 @@ function DesktopNav({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void 
   return (
     <nav className="flex items-center justify-between px-16 py-5" style={{ background: "#FFFFFF", borderBottom: "1px solid rgba(15,107,62,0.1)" }}>
       <div className="flex items-center gap-2.5">
-        <div className="w-9 h-9 rounded-xl bg-[#0F6B3E] flex items-center justify-center">
-          <TreePine size={18} color="#fff" />
+        <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center p-1.5" style={{ border: "1px solid rgba(15,107,62,0.16)" }}>
+          <GreenLoopLogo className="w-full h-full" />
         </div>
         <span className="font-bold text-[#1A2E1A] text-xl" style={{ fontFamily: "'Lora', serif" }}>GreenLoop</span>
-        <span className="text-xs text-[#6B7B6B] font-medium mt-0.5 ml-1">Bayreuth</span>
       </div>
       <div className="flex items-center gap-8">
         {[t.explore, t.howItWorks, t.aboutUs].map((item) => (
@@ -1496,15 +1481,15 @@ function DesktopHome({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void
         <div className="relative z-10 px-16 py-20 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/20 text-white text-xs font-semibold mb-6 backdrop-blur-sm">
             <Leaf size={12} />
-            {lang === "de" ? "10 geprüfte Partner in Bayreuth" : "10 verified partners in Bayreuth"}
+            {lang === "de" ? "Nachhaltige lokale Entscheidungen" : "Sustainable local choices"}
           </div>
           <h1 className="text-6xl font-bold text-white mb-6 leading-none" style={{ fontFamily: "'Lora', serif" }}>
-            {lang === "de" ? <>Dein grüner<br />Stadtführer<br />Bayreuth.</> : <>Your green<br />guide to<br />Bayreuth.</>}
+            {lang === "de" ? <>Dein Guide für<br />nachhaltige<br />lokale Orte.</> : <>Your guide to<br />sustainable<br />local choices.</>}
           </h1>
           <p className="text-white/80 text-lg mb-8 leading-relaxed max-w-md">
             {lang === "de"
-              ? "Entdecke lokale Läden, Cafés und Dienstleistungen, die echte Nachhaltigkeit leben. Transparent geprüft, ehrlich empfohlen."
-              : "Discover local shops, cafés, and services with genuine sustainability commitments. Transparently verified, honestly recommended."}
+              ? "Entdecke lokale Läden, Cafés und Restaurants, die echte Nachhaltigkeit leben. Transparent geprüft, ehrlich empfohlen."
+              : "Discover local shops, cafés, and restaurants with genuine sustainability commitments. Transparently verified, honestly recommended."}
           </p>
           <div className="flex gap-4">
             <button className="px-8 py-4 rounded-2xl bg-white text-[#0F6B3E] font-bold text-base">
@@ -1551,28 +1536,23 @@ function DesktopHome({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void
       {/* Map teaser */}
       <div className="px-16 pb-10">
         <div className="rounded-3xl overflow-hidden relative" style={{ height: 220, background: "#E8F0EB" }}>
-          <svg width="1312" height="220" viewBox="0 0 1312 220">
-            <rect width="1312" height="220" fill="#E8F0EB" />
-            <line x1="0" y1="110" x2="1312" y2="110" stroke="#E8E2D8" strokeWidth="18" />
-            <line x1="0" y1="60" x2="1312" y2="170" stroke="#EDE8E0" strokeWidth="12" />
-            <line x1="400" y1="0" x2="400" y2="220" stroke="#E8E2D8" strokeWidth="14" />
-            <line x1="800" y1="0" x2="800" y2="220" stroke="#EDE8E0" strokeWidth="10" />
-            <line x1="1100" y1="0" x2="1100" y2="220" stroke="#EDE8E0" strokeWidth="8" />
-            <rect x="420" y="30" width="180" height="120" rx="8" fill="#D8D2C8" opacity="0.7" />
-            <rect x="820" y="60" width="140" height="100" rx="8" fill="#D8D2C8" opacity="0.7" />
-            <ellipse cx="200" cy="160" rx="80" ry="50" fill="#C8DCBA" opacity="0.8" />
-          </svg>
+          <ImageWithFallback src={BAYREUTH_MAP_SRC} alt="Bayreuth map" className="w-full h-full object-cover" />
+          <div className="absolute inset-0" style={{ background: "rgba(251,247,239,0.22)" }} />
           {/* Partner pins on map */}
-          {[{x:380,y:95},{x:520,y:65},{x:660,y:130},{x:750,y:80},{x:840,y:155},{x:940,y:70},{x:1040,y:120},{x:1120,y:90},{x:290,y:140},{x:1200,y:140}].map((pin, i) => (
-            <div key={i} className="absolute flex flex-col items-center" style={{ left: pin.x - 16, top: pin.y - 36 }}>
-              <div className="w-8 h-8 rounded-xl flex items-center justify-center shadow-md"
-                style={{ background: i === 0 ? "#0F6B3E" : "#fff", border: i === 0 ? "none" : "2px solid #0F6B3E" }}>
-                <Leaf size={14} color={i === 0 ? "#fff" : "#0F6B3E"} />
+          {BUSINESSES.map((pin, i) => {
+            const x = 80 + (pin.mapX / 393) * 1152;
+            const y = 48 + ((pin.mapY - 220) / 150) * 132;
+            return (
+              <div key={pin.id} className="absolute flex flex-col items-center" style={{ left: x - 16, top: y - 36 }}>
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center shadow-md"
+                  style={{ background: i === 0 ? "#0F6B3E" : "#fff", border: i === 0 ? "none" : "2px solid #0F6B3E" }}>
+                  <Leaf size={14} color={i === 0 ? "#fff" : "#0F6B3E"} />
+                </div>
+                <div style={{ width: 0, height: 0, borderLeft: "4px solid transparent", borderRight: "4px solid transparent",
+                  borderTop: "6px solid #0F6B3E", opacity: i === 0 ? 1 : 0.5 }} />
               </div>
-              <div style={{ width: 0, height: 0, borderLeft: "4px solid transparent", borderRight: "4px solid transparent",
-                borderTop: `6px solid ${i === 0 ? "#0F6B3E" : "#0F6B3E"}`, opacity: i === 0 ? 1 : 0.5 }} />
-            </div>
-          ))}
+            );
+          })}
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <p className="text-[#1A2E1A] font-bold text-xl mb-1" style={{ fontFamily: "'Lora', serif" }}>
               {lang === "de" ? "Alle 10 Partner auf der Karte" : "All 10 partners on the map"}
@@ -1596,8 +1576,7 @@ function DesktopHome({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void
           {BUSINESSES.slice(0, 4).map((b) => (
             <div key={b.id} className="rounded-2xl bg-white overflow-hidden hover:shadow-xl transition-shadow cursor-pointer" style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.08)" }}>
               <div className="relative h-44">
-                <img src={b.image} alt={b.name} className="w-full h-full object-cover" />
-                <div className="absolute top-3 left-3"><VerifiedBadge small lang={lang} /></div>
+                <ImageWithFallback src={b.image} alt={b.name} className="w-full h-full object-cover" />
                 <button className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center">
                   <Heart size={14} color="#6B7B6B" />
                 </button>
@@ -1635,12 +1614,12 @@ function DesktopHome({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void
       <footer className="px-16 py-8" style={{ borderTop: "1px solid rgba(15,107,62,0.1)" }}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-[#0F6B3E] flex items-center justify-center">
-              <TreePine size={14} color="#fff" />
+            <div className="w-7 h-7 rounded-lg bg-white flex items-center justify-center p-1" style={{ border: "1px solid rgba(15,107,62,0.16)" }}>
+              <GreenLoopLogo className="w-full h-full" />
             </div>
-            <span className="font-bold text-[#1A2E1A]" style={{ fontFamily: "'Lora', serif" }}>GreenLoop Bayreuth</span>
+            <span className="font-bold text-[#1A2E1A]" style={{ fontFamily: "'Lora', serif" }}>GreenLoop</span>
           </div>
-          <p className="text-xs text-[#6B7B6B]">© 2025 GreenLoop · {lang === "de" ? "Mit ♥ gemacht in Bayreuth" : "Made with ♥ in Bayreuth"}</p>
+          <p className="text-xs text-[#6B7B6B]">© 2025 GreenLoop · {lang === "de" ? "Für lokale Gemeinschaften gemacht" : "Made for local communities"}</p>
           <div className="flex gap-4">
             <Instagram size={18} color="#6B7B6B" />
             <Facebook size={18} color="#6B7B6B" />
@@ -1684,8 +1663,8 @@ function DesktopExplore({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => v
             <div className="rounded-2xl bg-white p-5 sticky top-4" style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.07)" }}>
               <h3 className="font-bold text-[#1A2E1A] mb-4">{t.category}</h3>
               {(lang === "de"
-                ? ["Alle","Essen & Trinken","Mode & Kleidung","Gesundheit & Wellness","Haus & Garten","Dienstleistungen"]
-                : ["All","Food & Drink","Fashion & Clothing","Health & Wellness","Home & Garden","Services"]
+                ? ["Alle","Essen & Trinken","Café & Geschenke","Fair Trade","Handwerk","Restaurants"]
+                : ["All","Food & Drink","Café & Gifts","Fair Trade","Craft & Handmade","Restaurants"]
               ).map((c, i) => (
                 <button key={c} onClick={() => setActiveFilter(c)}
                   className="w-full flex items-center justify-between py-2.5 px-3 rounded-xl mb-1 text-sm font-medium"
@@ -1696,7 +1675,7 @@ function DesktopExplore({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => v
               <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(15,107,62,0.1)" }}>
                 <h3 className="font-bold text-[#1A2E1A] mb-3">{t.sustainability}</h3>
                 <div className="flex flex-col gap-2">
-                  {BADGES.map((b) => {
+                  {SUSTAINABILITY_FILTERS.map((b) => {
                     const Icon = b.icon;
                     return (
                       <label key={b.label} className="flex items-center gap-2.5 cursor-pointer">
@@ -1720,8 +1699,7 @@ function DesktopExplore({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => v
             {BUSINESSES.map((b) => (
               <div key={b.id} className="rounded-2xl bg-white overflow-hidden cursor-pointer hover:shadow-xl transition-shadow" style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.07)" }}>
                 <div className="relative h-40">
-                  <img src={b.image} alt={b.name} className="w-full h-full object-cover" />
-                  <div className="absolute top-3 left-3"><VerifiedBadge small lang={lang} /></div>
+                  <ImageWithFallback src={b.image} alt={b.name} className="w-full h-full object-cover" />
                   <button className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center">
                     <Heart size={14} color="#6B7B6B" />
                   </button>
@@ -1765,7 +1743,7 @@ function DesktopCriteria({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => 
             <Shield size={12} />{lang==="de"?"Transparent & unabhängig geprüft":"Transparent & Independently Verified"}
           </div>
           <h1 className="text-5xl font-bold text-white mb-4" style={{ fontFamily: "'Lora', serif" }}>
-            {lang==="de"?"Was macht einen Betrieb GreenLoop Geprüft?":"What makes a business GreenLoop Verified?"}
+            {lang==="de"?"Was macht einen Betrieb verifiziert?":"What makes a business verified?"}
           </h1>
           <p className="text-white/80 text-lg leading-relaxed">
             {lang==="de"
@@ -1783,7 +1761,7 @@ function DesktopCriteria({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => 
           {[
             { step:"01", icon:Search,    title:lang==="de"?"Bewerben":"Apply",   desc:lang==="de"?"Der Betrieb reicht eine Bewerbung ein und beschreibt seine Nachhaltigkeitspraxis und Dokumentation.":"Business submits an application describing their sustainability practices and documentation." },
             { step:"02", icon:Shield,    title:lang==="de"?"Prüfen":"Audit",     desc:lang==="de"?"Unser Team prüft die Unterlagen und führt einen Vor-Ort-Besuch durch, um alle angegebenen Kriterien zu verifizieren.":"Our team reviews documentation and conducts an in-person visit to verify all claimed criteria." },
-            { step:"03", icon:Check,     title:lang==="de"?"Bestätigen":"Verify", desc:lang==="de"?"Geprüfte Kriterien erscheinen im Geschäftsprofil mit dem GreenLoop-Geprüft-Badge.":"Verified criteria are listed on the business profile with the GreenLoop Verified badge." },
+            { step:"03", icon:Check,     title:lang==="de"?"Bestätigen":"Verify", desc:lang==="de"?"Geprüfte Kriterien erscheinen klar im Geschäftsprofil.":"Verified criteria are listed clearly on the business profile." },
             { step:"04", icon:TrendingUp,title:lang==="de"?"Verbessern":"Improve",desc:lang==="de"?"Jährliche Nachprüfungen und ein kontinuierlicher Verbesserungspfad, um weitere Kriterien zu erwerben.":"Annual re-audits and a continuous improvement pathway to earn additional criteria over time." },
           ].map(({ step, icon: Icon, title, desc }) => (
             <div key={step} className="flex flex-col">
@@ -1921,12 +1899,12 @@ function DesktopAbout({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => voi
         </div>
         <div className="grid grid-cols-3 gap-8">
           {[
-            { img:"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop&auto=format", name:"Lisa Sebald", role:lang==="de"?"UX Design & Forschung":"UX Design & Research" },
-            { img:"https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&h=120&fit=crop&auto=format", name:"Yunru Luo",  role:lang==="de"?"Produktstrategie":"Product Strategy" },
-            { img:"https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=120&h=120&fit=crop&auto=format", name:"Daria Luneva", role:lang==="de"?"Partnerschaften & Community":"Partnerships & Community" },
+            { img:"/team/lisa-sebald.png", name:"Lisa Sebald", role:lang==="de"?"UX Design & Forschung":"UX Design & Research" },
+            { img:"/team/yunru-luo.png", name:"Yunru Luo",  role:lang==="de"?"Produktstrategie":"Product Strategy" },
+            { img:"/team/daria-luneva.png", name:"Daria Luneva", role:lang==="de"?"Partnerschaften & Community":"Partnerships & Community" },
           ].map(({ img, name, role }) => (
             <div key={name} className="flex flex-col items-center text-center rounded-2xl p-6" style={{ background: "#FBF7EF" }}>
-              <img src={img} alt={name} className="w-20 h-20 rounded-2xl object-cover mb-4" />
+              <ImageWithFallback src={img} alt={name} className="w-20 h-20 rounded-2xl object-cover mb-4" />
               <p className="font-bold text-[#1A2E1A]">{name}</p>
               <p className="text-sm text-[#6B7B6B] mt-1">{role}</p>
             </div>
@@ -2022,8 +2000,8 @@ export default function App() {
       <div className="sticky top-0 z-50 flex items-center justify-between px-8 py-4"
         style={{ background: "#FFFFFF", borderBottom: "1px solid rgba(15,107,62,0.1)", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-[#0F6B3E] flex items-center justify-center">
-            <TreePine size={16} color="#fff" />
+          <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center p-1.5" style={{ border: "1px solid rgba(15,107,62,0.16)" }}>
+            <GreenLoopLogo className="w-full h-full" />
           </div>
           <span className="font-bold text-[#1A2E1A] text-lg" style={{ fontFamily: "'Lora', serif" }}>GreenLoop</span>
           <span className="text-xs text-[#6B7B6B] font-medium">UI Kit · Bayreuth</span>
