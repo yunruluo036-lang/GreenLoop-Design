@@ -22,7 +22,7 @@ const T = {
     scanCheckout: "Scan at the counter to redeem your welcome gift",
     validUntil: "Valid until 31 Aug 2025 · Single use",
     reviews: "What visitors say", writeReview: "Share your experience…",
-    ownerWord: "Owner's words", openNow: "Open now",
+    ownerWord: "Owner's Message", openNow: "Open now",
     savedPlaces: "Saved Places", language: "Language", settings: "Settings",
     getDirections: "Get Directions", share: "Share", seeAll: "See all",
     featuredPartners: "Featured Partners", nearYou: "Near You",
@@ -45,7 +45,7 @@ const T = {
     scanCheckout: "Zeig den Code an der Theke und erhalte dein Willkommensgeschenk",
     validUntil: "Gültig bis 31. Aug 2025 · Einmalig einlösbar",
     reviews: "Was Besucher sagen", writeReview: "Teile deine Erfahrung…",
-    ownerWord: "Aus dem Mund der Inhaberin", openNow: "Jetzt geöffnet",
+    ownerWord: "Nachricht der Inhaber:innen", openNow: "Jetzt geöffnet",
     savedPlaces: "Gespeicherte Orte", language: "Sprache", settings: "Einstellungen",
     getDirections: "Route", share: "Teilen", seeAll: "Alle sehen",
     featuredPartners: "Unsere Partner", nearYou: "In deiner Nähe",
@@ -117,15 +117,15 @@ const BUSINESSES = [
     image: "/shops/vedans.jpg",
     description: "Vegan and vegetarian food, fresh bowls, smoothies, and healthy meals in Bayreuth city centre.",
     descriptionDe: "Veganes und vegetarisches Essen, frische Bowls, Smoothies und gesunde Mahlzeiten in der Bayreuther Innenstadt.",
-    ownerQuote: "Vegan and vegetarian food, fresh bowls, smoothies, healthy meals.",
-    ownerQuoteDe: "Veganes und vegetarisches Essen, frische Bowls, Smoothies, gesunde Mahlzeiten.",
-    ownerName: "GreenLoop profile note",
-    ownerNameDe: "GreenLoop Profilnotiz",
+    ownerQuote: "We want fresh vegan and vegetarian food to feel easy, nourishing, and welcoming in everyday city life.",
+    ownerQuoteDe: "Wir möchten, dass frisches, pflanzenbetontes Essen im Alltag einfach, nährend und einladend ist.",
+    ownerName: "The Vedans Team",
+    ownerNameDe: "Inhaber:in",
     hours: "Opening hours vary",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
     reviews: [
-      { author: "GreenLoop", text: "Profile ready for verified community notes.", textDe: "Profil bereit für geprüfte Community-Notizen." },
+      { author: "GreenLoop note", text: "Fresh, friendly, and a great option for a healthy lunch in the city centre.", textDe: "Frisch, freundlich und eine tolle Option für ein gesundes Mittagessen in der Innenstadt." },
     ],
     mapX: 282, mapY: 275,
   },
@@ -144,10 +144,10 @@ const BUSINESSES = [
     image: "/shops/freudenherz.jpg",
     description: "Café, fair fashion, gifts, and selected sustainable and regional products.",
     descriptionDe: "Café, faire Mode, Geschenke sowie ausgewählte nachhaltige und regionale Produkte.",
-    ownerQuote: "Café, fair fashion, gifts, selected sustainable and regional products.",
-    ownerQuoteDe: "Café, faire Mode, Geschenke, ausgewählte nachhaltige und regionale Produkte.",
-    ownerName: "GreenLoop profile note",
-    ownerNameDe: "GreenLoop Profilnotiz",
+    ownerQuote: "Our concept brings coffee, fair fashion, gifts, and regional products together in one warm place for conscious choices.",
+    ownerQuoteDe: "Unser Konzept verbindet Kaffee, faire Mode, Geschenke und regionale Produkte an einem warmen Ort für bewusste Entscheidungen.",
+    ownerName: "Owner",
+    ownerNameDe: "Inhaber:in",
     hours: "Opening hours vary",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
@@ -171,10 +171,10 @@ const BUSINESSES = [
     image: "/shops/hamsterbacke.jpg",
     description: "Local community space with sustainable food and low-waste values.",
     descriptionDe: "Lokaler Community-Ort mit nachhaltigen Lebensmitteln und Low-Waste-Werten.",
-    ownerQuote: "Local community space, sustainable food and low-waste values.",
-    ownerQuoteDe: "Lokaler Community-Ort, nachhaltige Lebensmittel und Low-Waste-Werte.",
-    ownerName: "GreenLoop profile note",
-    ownerNameDe: "GreenLoop Profilnotiz",
+    ownerQuote: "Community and low-waste values belong together: good food should connect people and make sustainable habits easier.",
+    ownerQuoteDe: "Community und Low-Waste-Werte gehören zusammen: Gutes Essen soll Menschen verbinden und nachhaltige Gewohnheiten erleichtern.",
+    ownerName: "Owner",
+    ownerNameDe: "Inhaber:in",
     hours: "Opening hours vary",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
@@ -198,10 +198,10 @@ const BUSINESSES = [
     image: "/shops/weltladen.jpg",
     description: "Fair-trade products, ethical consumption, and global responsibility.",
     descriptionDe: "Fair-Trade-Produkte, ethischer Konsum und globale Verantwortung.",
-    ownerQuote: "Fair-trade products, ethical consumption, global responsibility.",
-    ownerQuoteDe: "Fair-Trade-Produkte, ethischer Konsum, globale Verantwortung.",
-    ownerName: "GreenLoop profile note",
-    ownerNameDe: "GreenLoop Profilnotiz",
+    ownerQuote: "Fair trade is about respect across the whole supply chain, from producers to the people choosing these products here.",
+    ownerQuoteDe: "Fairer Handel bedeutet Respekt entlang der gesamten Lieferkette, von den Produzent:innen bis zu den Menschen, die hier einkaufen.",
+    ownerName: "Owner",
+    ownerNameDe: "Inhaber:in",
     hours: "Opening hours vary",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
@@ -225,10 +225,10 @@ const BUSINESSES = [
     image: "/shops/lemontree.jpg",
     description: "Vegan food, fair fashion, and sustainable lifestyle products.",
     descriptionDe: "Veganes Essen, faire Mode und nachhaltige Lifestyle-Produkte.",
-    ownerQuote: "Vegan food, fair fashion, sustainable lifestyle products.",
-    ownerQuoteDe: "Veganes Essen, faire Mode, nachhaltige Lifestyle-Produkte.",
-    ownerName: "GreenLoop profile note",
-    ownerNameDe: "GreenLoop Profilnotiz",
+    ownerQuote: "We curate food, fashion, and lifestyle products that make a more sustainable routine feel beautiful and practical.",
+    ownerQuoteDe: "Wir kuratieren Essen, Mode und Lifestyle-Produkte, die nachhaltigere Routinen schön und praktisch machen.",
+    ownerName: "Owner",
+    ownerNameDe: "Inhaber:in",
     hours: "Opening hours vary",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
@@ -252,10 +252,10 @@ const BUSINESSES = [
     image: "/shops/reformhaus-sattran.jpg",
     description: "Organic, natural, and health-oriented products.",
     descriptionDe: "Bio-, Natur- und gesundheitsorientierte Produkte.",
-    ownerQuote: "Organic, natural and health-oriented products.",
-    ownerQuoteDe: "Bio-, Natur- und gesundheitsorientierte Produkte.",
-    ownerName: "GreenLoop profile note",
-    ownerNameDe: "GreenLoop Profilnotiz",
+    ownerQuote: "Health-conscious shopping works best when natural, organic, and carefully selected products are easy to understand.",
+    ownerQuoteDe: "Gesundheitsbewusstes Einkaufen gelingt am besten, wenn natürliche, biologische und sorgfältig ausgewählte Produkte verständlich sind.",
+    ownerName: "Owner",
+    ownerNameDe: "Inhaber:in",
     hours: "Opening hours vary",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
@@ -279,10 +279,10 @@ const BUSINESSES = [
     image: "/shops/verstofflicht.jpg",
     description: "Fabrics, handmade goods, repair-oriented making, and creative sustainable consumption.",
     descriptionDe: "Stoffe, handgemachte Produkte, reparaturorientiertes Gestalten und kreativer nachhaltiger Konsum.",
-    ownerQuote: "Fabrics, handmade goods, repair-oriented and creative sustainable consumption.",
-    ownerQuoteDe: "Stoffe, Handgemachtes, reparaturorientierter und kreativer nachhaltiger Konsum.",
-    ownerName: "GreenLoop profile note",
-    ownerNameDe: "GreenLoop Profilnotiz",
+    ownerQuote: "Making, repairing, and choosing quality materials helps people value what they own and keep it in use longer.",
+    ownerQuoteDe: "Selbermachen, Reparieren und hochwertige Materialien helfen Menschen, Dinge wertzuschätzen und länger zu nutzen.",
+    ownerName: "Owner",
+    ownerNameDe: "Inhaber:in",
     hours: "Opening hours vary",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
@@ -306,10 +306,10 @@ const BUSINESSES = [
     image: "/shops/atelier-foerster-oetter.jpg",
     description: "Local craft, handmade design, and long-lasting products.",
     descriptionDe: "Lokales Handwerk, handgemachtes Design und langlebige Produkte.",
-    ownerQuote: "Local craft, handmade design, long-lasting products.",
-    ownerQuoteDe: "Lokales Handwerk, handgemachtes Design, langlebige Produkte.",
-    ownerName: "GreenLoop profile note",
-    ownerNameDe: "GreenLoop Profilnotiz",
+    ownerQuote: "Local craft is about patience, repair, and pieces that are made to be worn, cared for, and kept.",
+    ownerQuoteDe: "Lokales Handwerk steht für Geduld, Reparatur und Stücke, die getragen, gepflegt und bewahrt werden.",
+    ownerName: "Owner",
+    ownerNameDe: "Inhaber:in",
     hours: "Opening hours vary",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
@@ -333,10 +333,10 @@ const BUSINESSES = [
     image: "/shops/teegschwendner.jpg",
     description: "Tea, selected quality products, and responsible consumption.",
     descriptionDe: "Tee, ausgewählte Qualitätsprodukte und verantwortungsvoller Konsum.",
-    ownerQuote: "Tea, selected quality products, responsible consumption.",
-    ownerQuoteDe: "Tee, ausgewählte Qualitätsprodukte, verantwortungsvoller Konsum.",
-    ownerName: "GreenLoop profile note",
-    ownerNameDe: "GreenLoop Profilnotiz",
+    ownerQuote: "Responsible consumption starts with thoughtful selection, quality products, and the time to choose well.",
+    ownerQuoteDe: "Verantwortungsvoller Konsum beginnt mit sorgfältiger Auswahl, Qualität und der Zeit, bewusst zu wählen.",
+    ownerName: "Owner",
+    ownerNameDe: "Inhaber:in",
     hours: "Opening hours vary",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
@@ -360,10 +360,10 @@ const BUSINESSES = [
     image: "/shops/andre-hagen-optiker.jpg",
     description: "Local service, repair, long-lasting eyewear, and responsible consumption.",
     descriptionDe: "Lokaler Service, Reparatur, langlebige Brillen und verantwortungsvoller Konsum.",
-    ownerQuote: "Local service, repair, long-lasting eyewear, responsible consumption.",
-    ownerQuoteDe: "Lokaler Service, Reparatur, langlebige Brillen, verantwortungsvoller Konsum.",
-    ownerName: "GreenLoop profile note",
-    ownerNameDe: "GreenLoop Profilnotiz",
+    ownerQuote: "Good eyewear should last. Careful local service and repair help customers keep the right pair for longer.",
+    ownerQuoteDe: "Gute Brillen sollen lange halten. Sorgfältiger lokaler Service und Reparatur helfen, die passende Brille länger zu nutzen.",
+    ownerName: "Owner",
+    ownerNameDe: "Inhaber:in",
     hours: "Opening hours vary",
     offer: "Show your GreenLoop profile when you visit",
     offerDe: "Zeige dein GreenLoop-Profil bei deinem Besuch",
@@ -377,30 +377,36 @@ const BUSINESSES = [
 const EVENTS = [
   {
     id: 1,
-    title: "Repair Café — Bring Your Broken Things",
-    titleDe: "Repair-Café — Bring deine kaputten Sachen",
-    date: "Sa, 12. Jul", time: "10:00–14:00",
-    location: "VerSTOFFlicht, Sophienstraße 21",
-    attendees: 34, category: "Workshop",
-    image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=250&fit=crop&auto=format",
+    title: "Business of the Month",
+    titleDe: "Business of the Month",
+    description: "A monthly feature highlighting one local GreenLoop partner and their sustainability story.",
+    descriptionDe: "Ein monatliches Feature über einen lokalen GreenLoop-Partner und seine Nachhaltigkeitsgeschichte.",
+    date: "Monthly", time: "Feature",
+    location: "GreenLoop partners",
+    category: "Feature",
+    image: "/shops/vedans.jpg",
   },
   {
     id: 2,
-    title: "Urban Harvest Walk — Foraging in Bayreuth",
-    titleDe: "Stadtspaziergang — Wildkräuter sammeln in Bayreuth",
-    date: "So, 13. Jul", time: "09:00–12:00",
-    location: "Stadtpark, Haupteingang",
-    attendees: 18, category: "Nature",
-    image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=250&fit=crop&auto=format",
+    title: "Green Week",
+    titleDe: "Green Week",
+    description: "A week of sustainable shopping, local activities, and special offers from GreenLoop partners.",
+    descriptionDe: "Eine Community-Eventwoche mit nachhaltigem Einkaufen, lokalen Aktivitäten und besonderen Angeboten von GreenLoop-Partnern.",
+    date: "Community event", time: "All week",
+    location: "GreenLoop partners",
+    category: "Community",
+    image: "/maps/map.png",
   },
   {
     id: 3,
-    title: "Zero Waste Kitchen — Cooking Workshop",
-    titleDe: "Zero-Waste-Küche — Kochworkshop",
-    date: "Mi, 16. Jul", time: "18:00–20:30",
-    location: "Vedans Fresh ’n’ Healthy, Richard-Wagner-Str. 26",
-    attendees: 12, category: "Food",
-    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=250&fit=crop&auto=format",
+    title: "Jewelry Workshop at Atelier Förster-Oetter",
+    titleDe: "Schmuckworkshop bei Atelier Förster-Oetter",
+    description: "A hands-on jewelry workshop hosted by Atelier Förster-Oetter, focused on local craft, repair, and long-lasting design.",
+    descriptionDe: "Ein praktischer Schmuckworkshop bei Atelier Förster-Oetter mit Fokus auf lokalem Handwerk, Reparatur und langlebigem Design.",
+    date: "Workshop", time: "Details coming soon",
+    location: "Atelier Förster-Oetter",
+    category: "Workshop",
+    image: "/shops/atelier-foerster-oetter.jpg",
   },
 ];
 
@@ -1244,12 +1250,12 @@ function ScreenCommunity({ lang }: { lang: Lang }) {
         <div className="px-5 pt-4 pb-2">
           <h2 className="text-2xl font-bold text-[#1A2E1A] mb-1" style={{ fontFamily: "'Lora', serif" }}>{t.community}</h2>
           <p className="text-sm text-[#6B7B6B] mb-4">
-            {lang === "de" ? "Veranstaltungen & Workshops in Bayreuth" : "Events & workshops in Bayreuth"}
+            {lang === "de" ? "GreenLoop-Aktivitäten, Partnerfeatures und lokale Events." : "GreenLoop activities, partner features, and local events."}
           </p>
           <div className="flex gap-2 mb-4 overflow-x-auto pb-0.5">
             {(lang === "de"
-              ? ["Alle","Diese Woche","Workshops","Natur","Essen"]
-              : ["All","This Week","Workshops","Nature","Food"]
+              ? ["Alle","Features","Community","Workshops"]
+              : ["All","Features","Community","Workshops"]
             ).map((c, i) => (
               <button key={c} className="flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold"
                 style={i === 0 ? { background: "#0F6B3E", color: "#fff" } : { background: "#fff", color: "#1A2E1A", border: "1px solid rgba(15,107,62,0.15)" }}>
@@ -1268,9 +1274,12 @@ function ScreenCommunity({ lang }: { lang: Lang }) {
             <h3 className="text-white font-bold mt-1 leading-tight text-sm">
               {lang === "de" ? EVENTS[0].titleDe : EVENTS[0].title}
             </h3>
+            <p className="text-white/80 text-xs mt-1 leading-snug line-clamp-2">
+              {lang === "de" ? EVENTS[0].descriptionDe : EVENTS[0].description}
+            </p>
             <div className="flex items-center gap-3 mt-1">
               <span className="text-white/80 text-xs flex items-center gap-1"><Calendar size={10} />{EVENTS[0].date}</span>
-              <span className="text-white/80 text-xs flex items-center gap-1"><Users size={10} />{EVENTS[0].attendees} {lang === "de" ? "dabei" : "going"}</span>
+              <span className="text-white/80 text-xs flex items-center gap-1"><MapPin size={10} />{EVENTS[0].location}</span>
             </div>
           </div>
         </div>
@@ -1282,8 +1291,8 @@ function ScreenCommunity({ lang }: { lang: Lang }) {
               <div className="flex-1 min-w-0">
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold" style={{ background: "#E8F5EE", color: "#0F6B3E" }}>{e.category}</span>
                 <h4 className="font-bold text-[#1A2E1A] text-sm leading-tight mt-1">{lang === "de" ? e.titleDe : e.title}</h4>
+                <p className="text-xs text-[#6B7B6B] mt-1 leading-snug line-clamp-2">{lang === "de" ? e.descriptionDe : e.description}</p>
                 <p className="text-xs text-[#6B7B6B] mt-1 flex items-center gap-1"><Calendar size={10} />{e.date} · {e.time}</p>
-                <p className="text-xs text-[#6B7B6B] flex items-center gap-1"><Users size={10} />{e.attendees} {lang === "de" ? "dabei" : "going"}</p>
               </div>
             </div>
           ))}
