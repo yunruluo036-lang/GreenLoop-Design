@@ -18,9 +18,9 @@ const T = {
     profile: "Profile", home: "Home", filter: "Filter", search: "Search businesses…",
     verifiedCriteria: "Verified Criteria",
     sustainabilityInfo: "Sustainability Info", firstVisitOffer: "Your First Visit Offer",
-    showAt: "Show this at", freeHotDrink: "One free hot drink", freeHotDrinkSub: "on your first visit",
+    showAt: "Show this offer at", freeHotDrink: "One free hot drink", freeHotDrinkSub: "on your first visit",
     scanCheckout: "Scan at the counter to redeem your welcome gift",
-    validUntil: "Valid until 31 Aug 2025 · Single use",
+    validUntil: "Valid for your first visit · Single use",
     reviews: "What visitors say", writeReview: "Share your experience…",
     ownerWord: "Owner's Message", openNow: "Open now",
     savedPlaces: "Saved Places", language: "Language", settings: "Settings",
@@ -1202,7 +1202,7 @@ function ScreenOffer({ lang }: { lang: Lang }) {
         {/* Card */}
         <div className="w-full rounded-3xl bg-white p-5 mb-4">
           {/* Business header */}
-          <div className="flex items-start justify-between gap-3 mb-4">
+          <div className="flex items-start justify-center gap-3 mb-4 text-center">
             <div>
               <h3 className="font-bold text-[#1A2E1A] text-sm">{lang === "de" ? b.nameDe : b.name}</h3>
               <p className="text-xs text-[#6B7B6B]">{lang === "de" ? b.categoryDe : b.category}</p>
@@ -1653,7 +1653,7 @@ function DesktopExplore({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => v
             <h1 className="text-4xl font-bold text-[#1A2E1A] mb-2" style={{ fontFamily: "'Lora', serif" }}>
               {lang === "de" ? "Partner entdecken" : "Explore Partners"}
             </h1>
-            <p className="text-[#6B7B6B]">{lang === "de" ? "10 geprüfte nachhaltige Betriebe in Bayreuth" : "10 verified sustainable businesses in Bayreuth"}</p>
+            <p className="text-[#6B7B6B]">{lang === "de" ? "10 geprüfte nachhaltige Betriebe in Bayreuth" : "10 verified sustainable local businesses"}</p>
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-3 rounded-2xl px-5 py-3 bg-white" style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.07)", width: 320 }}>
