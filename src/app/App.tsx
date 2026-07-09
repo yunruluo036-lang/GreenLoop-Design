@@ -77,17 +77,32 @@ function GreenLoopLogo({ className = "" }: { className?: string }) {
 
 // ─── Shared Data ─────────────────────────────────────────────────────────────
 
+const LABEL_COLORS: Record<string, { bg: string; color: string }> = {
+  "Vegan Options": { bg: "#E7F6EC", color: "#176B3A" },
+  "Vegetarian Options": { bg: "#DFF4EA", color: "#145F45" },
+  "Regional Ingredients": { bg: "#FBE8D3", color: "#8A4B16" },
+  "Seasonal Products": { bg: "#F8DDE0", color: "#9A2F35" },
+  Organic: { bg: "#EAF6DA", color: "#2F6D25" },
+  "Fair Trade": { bg: "#F7EFCB", color: "#6D5720" },
+  "Reusable Packaging": { bg: "#DDF3EF", color: "#126D63" },
+  "Plastic-Free": { bg: "#DCECF8", color: "#1D5F8D" },
+  "Refill Station": { bg: "#D9F4F4", color: "#08747A" },
+  "Socially Responsible": { bg: "#ECE4F6", color: "#5D3A8A" },
+};
+
+const labelColor = (label: string) => LABEL_COLORS[label] ?? { bg: "#E8F5EE", color: "#0F6B3E" };
+
 const BADGES = [
-  { label: "Vegan Options", labelDe: "Vegane Optionen", icon: Sparkles, color: "#3A8C55", bg: "#EAF7EF", emoji: "🌱" },
-  { label: "Vegetarian Options", labelDe: "Vegetarische Optionen", icon: Leaf, color: "#2D7A45", bg: "#E8F5EE", emoji: "🥗" },
-  { label: "Regional Ingredients", labelDe: "Regionale Zutaten", icon: MapPin, color: "#1A6B3E", bg: "#E0F0E8", emoji: "🥕" },
-  { label: "Seasonal Products", labelDe: "Saisonale Produkte", icon: Calendar, color: "#7A5C1E", bg: "#F7EFDE", emoji: "🍎" },
-  { label: "Organic", labelDe: "Bio", icon: Leaf, color: "#2D7A45", bg: "#E8F5EE", emoji: "🌾" },
-  { label: "Fair Trade", labelDe: "Fair Trade", icon: Globe, color: "#5C6B2E", bg: "#EEF2DE", emoji: "☕" },
-  { label: "Reusable Packaging", labelDe: "Mehrwegverpackung", icon: Recycle, color: "#1E7A6A", bg: "#DEF2EF", emoji: "♻️" },
-  { label: "Plastic-Free", labelDe: "Plastikfrei", icon: Package, color: "#2A5C8A", bg: "#DEE9F5", emoji: "🚫" },
-  { label: "Refill Station", labelDe: "Nachfüllstation", icon: Droplets, color: "#1E7A6A", bg: "#DEF2EF", emoji: "🔄" },
-  { label: "Socially Responsible", labelDe: "Sozial verantwortlich", icon: Users, color: "#0F6B3E", bg: "#E8F5EE", emoji: "🤝" },
+  { label: "Vegan Options", labelDe: "Vegane Optionen", icon: Sparkles, emoji: "🌱", ...labelColor("Vegan Options") },
+  { label: "Vegetarian Options", labelDe: "Vegetarische Optionen", icon: Leaf, emoji: "🥗", ...labelColor("Vegetarian Options") },
+  { label: "Regional Ingredients", labelDe: "Regionale Zutaten", icon: MapPin, emoji: "🥕", ...labelColor("Regional Ingredients") },
+  { label: "Seasonal Products", labelDe: "Saisonale Produkte", icon: Calendar, emoji: "🍎", ...labelColor("Seasonal Products") },
+  { label: "Organic", labelDe: "Bio", icon: Leaf, emoji: "🌾", ...labelColor("Organic") },
+  { label: "Fair Trade", labelDe: "Fair Trade", icon: Globe, emoji: "☕", ...labelColor("Fair Trade") },
+  { label: "Reusable Packaging", labelDe: "Mehrwegverpackung", icon: Recycle, emoji: "♻️", ...labelColor("Reusable Packaging") },
+  { label: "Plastic-Free", labelDe: "Plastikfrei", icon: Package, emoji: "🚫", ...labelColor("Plastic-Free") },
+  { label: "Refill Station", labelDe: "Nachfüllstation", icon: Droplets, emoji: "🔄", ...labelColor("Refill Station") },
+  { label: "Socially Responsible", labelDe: "Sozial verantwortlich", icon: Users, emoji: "🤝", ...labelColor("Socially Responsible") },
 ];
 
 const SUSTAINABILITY_FILTERS = [
@@ -1800,13 +1815,13 @@ function DesktopExplore({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => v
                   {SUSTAINABILITY_FILTERS.map((b) => {
                     return (
                       <label key={b.label} className="flex items-center gap-2.5 cursor-pointer">
-                        <div className="w-4 h-4 rounded-md border-2 flex items-center justify-center" style={{ borderColor: "#0F6B3E", background: "#E8F5EE" }}>
-                          <Check size={10} color="#0F6B3E" strokeWidth={3} />
+                        <div className="w-4 h-4 rounded-md border-2 flex items-center justify-center" style={{ borderColor: b.color, background: b.bg }}>
+                          <Check size={10} color={b.color} strokeWidth={3} />
                         </div>
                         <div className="w-6 h-6 rounded-lg flex items-center justify-center text-sm" style={{ background: b.bg }}>
                           {b.emoji}
                         </div>
-                        <span className="text-sm text-[#3A4A3A]">{lang === "de" ? b.labelDe : b.label}</span>
+                        <span className="text-sm font-medium" style={{ color: b.color }}>{lang === "de" ? b.labelDe : b.label}</span>
                       </label>
                     );
                   })}
