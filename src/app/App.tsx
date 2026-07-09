@@ -7,7 +7,7 @@ import {
   ShoppingBag, Droplets, Globe, Award,
   Instagram, Facebook, Twitter, Phone, Clock,
   TrendingUp, Shield, Sparkles,
-  MessageSquare, Languages, Settings, BookOpen, Info
+  MessageSquare, Languages, Settings, BookOpen, Info, Menu
 } from "lucide-react";
 
 // ─── i18n ─────────────────────────────────────────────────────────────────────
@@ -2107,9 +2107,16 @@ export default function App() {
   const [mobileIdx, setMobileIdx] = useState(0);
   const [desktopIdx, setDesktopIdx] = useState(0);
   const [lang, setLang] = useState<Lang>("en");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const screenId = MOBILE_SCREENS[mobileIdx].id;
   const dScreenId = DESKTOP_SCREENS[desktopIdx].id;
+  const activeScreens = tab === "mobile" ? MOBILE_SCREENS : DESKTOP_SCREENS;
+  const activeIdx = tab === "mobile" ? mobileIdx : desktopIdx;
+  const activeTitle = lang === "de" ? activeScreens[activeIdx].labelDe : activeScreens[activeIdx].label;
+  const sidebarTitle = tab === "mobile"
+    ? (lang === "de" ? "App-Screens" : "Mobile Screens")
+    : (lang === "de" ? "Website-Seiten" : "Desktop Pages");
 
   const mobileScreen = () => {
     switch (screenId) {
@@ -2137,34 +2144,124 @@ export default function App() {
     }
   };
 
+  const selectScreen = (idx: number) => {
+    if (tab === "mobile") {
+      setMobileIdx(idx);
+    } else {
+      setDesktopIdx(idx);
+    }
+    setIsSidebarOpen(false);
+  };
+
+  const selectTab = (nextTab: "mobile" | "desktop") => {
+    setTab(nextTab);
+    setIsSidebarOpen(false);
+  };
+
   return (
-    <div className="min-h-screen" style={{ background: "#F0EBE0", fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ background: "#F0EBE0", fontFamily: "'DM Sans', sans-serif" }}>
+      <style>{`
+        .ui-kit-phone-preview {
+          width: 393px;
+          height: 852px;
+          position: relative;
+        }
+        .ui-kit-phone-preview-inner {
+          position: absolute;
+          left: 50%;
+          top: 0;
+          transform: translateX(-50%) scale(1);
+          transform-origin: top center;
+        }
+        .ui-kit-desktop-preview {
+          transform: scale(0.72);
+          transform-origin: top center;
+          margin-bottom: -240px;
+        }
+        @media (max-width: 767px) {
+          .ui-kit-desktop-preview-wrap {
+            width: min(100%, calc(100vw - 16px));
+            height: 300px;
+            overflow: hidden;
+          }
+          .ui-kit-desktop-preview {
+            width: 1440px;
+            transform: scale(0.32);
+            transform-origin: top left;
+            margin-bottom: 0;
+          }
+        }
+        @media (max-width: 430px) {
+          .ui-kit-phone-preview {
+            width: 338px;
+            height: 733px;
+          }
+          .ui-kit-phone-preview-inner {
+            transform: translateX(-50%) scale(0.86);
+          }
+          .ui-kit-desktop-preview-wrap {
+            width: min(100%, 346px);
+            height: 236px;
+            overflow: hidden;
+          }
+          .ui-kit-desktop-preview {
+            width: 1440px;
+            transform: scale(0.24);
+            transform-origin: top left;
+            margin-bottom: 0;
+          }
+        }
+        @media (max-width: 360px) {
+          .ui-kit-phone-preview {
+            width: 307px;
+            height: 665px;
+          }
+          .ui-kit-phone-preview-inner {
+            transform: translateX(-50%) scale(0.78);
+          }
+          .ui-kit-desktop-preview-wrap {
+            width: min(100%, 320px);
+            height: 216px;
+          }
+          .ui-kit-desktop-preview {
+            transform: scale(0.22);
+          }
+        }
+      `}</style>
       {/* Top bar */}
-      <div className="sticky top-0 z-50 flex items-center justify-between px-8 py-4"
+      <div className="sticky top-0 z-50 flex flex-wrap items-center justify-between gap-3 px-4 py-3 md:flex-nowrap md:px-8 md:py-4"
         style={{ background: "#FFFFFF", borderBottom: "1px solid rgba(15,107,62,0.1)", boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
-        <div className="flex items-center gap-2.5">
+        <div className="flex min-w-0 items-center gap-2.5">
+          <button
+            onClick={() => setIsSidebarOpen(true)}
+            className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-white md:hidden"
+            style={{ border: "1px solid rgba(15,107,62,0.16)", boxShadow: "0 1px 6px rgba(0,0,0,0.06)" }}
+            aria-label={lang === "de" ? "Navigation öffnen" : "Open navigation"}
+          >
+            <Menu size={18} color="#1A2E1A" />
+          </button>
           <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center p-1.5" style={{ border: "1px solid rgba(15,107,62,0.16)" }}>
             <GreenLoopLogo className="w-full h-full" />
           </div>
           <span className="font-bold text-[#1A2E1A] text-lg" style={{ fontFamily: "'Lora', serif" }}>GreenLoop</span>
-          <span className="text-xs text-[#6B7B6B] font-medium">UI Kit · Bayreuth</span>
+          <span className="text-[11px] text-[#6B7B6B] font-medium sm:text-xs">UI Kit · GreenLoop</span>
         </div>
 
         {/* Tab switcher */}
-        <div className="flex items-center gap-1 p-1 rounded-xl" style={{ background: "#F0EBE0" }}>
-          <button onClick={() => setTab("mobile")} className="px-5 py-2 rounded-lg text-sm font-semibold transition-all"
+        <div className="order-3 flex w-full items-center gap-1 rounded-xl p-1 md:order-none md:w-auto" style={{ background: "#F0EBE0" }}>
+          <button onClick={() => selectTab("mobile")} className="flex-1 rounded-lg px-3 py-2 text-xs font-semibold transition-all sm:text-sm md:flex-none md:px-5"
             style={tab === "mobile" ? { background: "#fff", color: "#0F6B3E", boxShadow: "0 1px 6px rgba(0,0,0,0.08)" } : { color: "#6B7B6B" }}>
-            📱 Mobile · {MOBILE_SCREENS.length} screens
+            Mobile <span className="hidden sm:inline">· {MOBILE_SCREENS.length} screens</span>
           </button>
-          <button onClick={() => setTab("desktop")} className="px-5 py-2 rounded-lg text-sm font-semibold transition-all"
+          <button onClick={() => selectTab("desktop")} className="flex-1 rounded-lg px-3 py-2 text-xs font-semibold transition-all sm:text-sm md:flex-none md:px-5"
             style={tab === "desktop" ? { background: "#fff", color: "#0F6B3E", boxShadow: "0 1px 6px rgba(0,0,0,0.08)" } : { color: "#6B7B6B" }}>
-            🖥 Desktop · {DESKTOP_SCREENS.length} pages
+            Desktop <span className="hidden sm:inline">· {DESKTOP_SCREENS.length} pages</span>
           </button>
         </div>
 
         {/* Global language switcher */}
-        <div className="flex items-center gap-3">
-          <span className="text-xs text-[#6B7B6B]">{lang === "de" ? "Sprache:" : "Language:"}</span>
+        <div className="flex flex-shrink-0 items-center gap-2 md:gap-3">
+          <span className="hidden text-xs text-[#6B7B6B] sm:inline">{lang === "de" ? "Sprache:" : "Language:"}</span>
           <div className="flex rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(15,107,62,0.2)" }}>
             {(["en","de"] as Lang[]).map((l) => (
               <button key={l} onClick={() => setLang(l)} className="px-3 py-1.5 text-xs font-bold transition-all"
@@ -2176,105 +2273,89 @@ export default function App() {
         </div>
       </div>
 
-      {tab === "mobile" && (
-        <div className="flex" style={{ minHeight: "calc(100vh - 65px)" }}>
-          {/* Screen list */}
-          <div className="w-52 flex-shrink-0 py-6 px-4" style={{ background: "#FFFFFF", borderRight: "1px solid rgba(15,107,62,0.1)" }}>
-            <p className="text-[10px] font-bold text-[#6B7B6B] uppercase tracking-widest px-2 mb-3">
-              {lang === "de" ? "App-Screens" : "Mobile Screens"}
-            </p>
-            {MOBILE_SCREENS.map((s, i) => (
-              <button key={s.id} onClick={() => setMobileIdx(i)}
-                className="w-full text-left px-3 py-2.5 rounded-xl mb-1 text-sm transition-all"
-                style={mobileIdx === i ? { background: "#E8F5EE", color: "#0F6B3E", fontWeight: 600 } : { color: "#3A4A3A" }}>
-                <span className="text-[10px] text-[#6B7B6B] block">{String(i + 1).padStart(2, "0")}</span>
-                {lang === "de" ? s.labelDe : s.label}
-              </button>
-            ))}
+      <div className="flex" style={{ minHeight: "calc(100vh - 65px)" }}>
+        {isSidebarOpen && (
+          <button
+            className="fixed inset-0 z-40 bg-[#1A2E1A]/30 md:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+            aria-label={lang === "de" ? "Navigation schließen" : "Close navigation"}
+          />
+        )}
+
+        {/* Screen list */}
+        <aside
+          className={`fixed left-0 top-0 z-50 h-full w-64 flex-shrink-0 px-4 py-6 transition-transform duration-200 md:sticky md:top-[65px] md:z-10 md:h-[calc(100vh-65px)] md:w-52 md:translate-x-0 ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+          style={{ background: "#FFFFFF", borderRight: "1px solid rgba(15,107,62,0.1)" }}
+        >
+          <div className="mb-4 flex items-center justify-between md:hidden">
+            <span className="text-sm font-bold text-[#1A2E1A]" style={{ fontFamily: "'Lora', serif" }}>GreenLoop</span>
+            <button
+              onClick={() => setIsSidebarOpen(false)}
+              className="flex h-9 w-9 items-center justify-center rounded-xl"
+              style={{ background: "#F0EBE0" }}
+              aria-label={lang === "de" ? "Navigation schließen" : "Close navigation"}
+            >
+              <X size={18} color="#1A2E1A" />
+            </button>
           </div>
+          <p className="text-[10px] font-bold text-[#6B7B6B] uppercase tracking-widest px-2 mb-3">
+            {sidebarTitle}
+          </p>
+          {activeScreens.map((s, i) => (
+            <button key={s.id} onClick={() => selectScreen(i)}
+              className="w-full text-left px-3 py-2.5 rounded-xl mb-1 text-sm transition-all"
+              style={activeIdx === i ? { background: "#E8F5EE", color: "#0F6B3E", fontWeight: 600 } : { color: "#3A4A3A" }}>
+              <span className="text-[10px] text-[#6B7B6B] block">{String(i + 1).padStart(2, "0")}</span>
+              {lang === "de" ? s.labelDe : s.label}
+            </button>
+          ))}
+        </aside>
 
-          {/* Canvas */}
-          <div className="flex-1 flex items-start justify-center py-10 px-8 overflow-auto">
-            <div className="flex flex-col items-center gap-6">
-              <div className="flex items-center gap-3">
-                <button onClick={() => setMobileIdx((i) => (i - 1 + MOBILE_SCREENS.length) % MOBILE_SCREENS.length)}
-                  className="w-10 h-10 rounded-xl flex items-center justify-center bg-white" style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
-                  <ChevronLeft size={18} color="#1A2E1A" />
-                </button>
-                <span className="text-sm font-semibold text-[#1A2E1A]">
-                  {lang === "de" ? MOBILE_SCREENS[mobileIdx].labelDe : MOBILE_SCREENS[mobileIdx].label}
-                </span>
-                <button onClick={() => setMobileIdx((i) => (i + 1) % MOBILE_SCREENS.length)}
-                  className="w-10 h-10 rounded-xl flex items-center justify-center bg-white" style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
-                  <ChevronRight size={18} color="#1A2E1A" />
-                </button>
-              </div>
-
-              {mobileScreen()}
-
-              <div className="flex gap-2 flex-wrap justify-center max-w-2xl">
-                {MOBILE_SCREENS.map((s, i) => (
-                  <button key={s.id} onClick={() => setMobileIdx(i)}
-                    className="px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all"
-                    style={mobileIdx === i ? { background: "#0F6B3E", color: "#fff" } : { background: "#fff", color: "#6B7B6B", boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}>
-                    {i + 1}. {lang === "de" ? s.labelDe : s.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {tab === "desktop" && (
-        <div className="flex" style={{ minHeight: "calc(100vh - 65px)" }}>
-          {/* Screen list */}
-          <div className="w-52 flex-shrink-0 py-6 px-4" style={{ background: "#FFFFFF", borderRight: "1px solid rgba(15,107,62,0.1)" }}>
-            <p className="text-[10px] font-bold text-[#6B7B6B] uppercase tracking-widest px-2 mb-3">
-              {lang === "de" ? "Website-Seiten" : "Desktop Pages"}
-            </p>
-            {DESKTOP_SCREENS.map((s, i) => (
-              <button key={s.id} onClick={() => setDesktopIdx(i)}
-                className="w-full text-left px-3 py-2.5 rounded-xl mb-1 text-sm transition-all"
-                style={desktopIdx === i ? { background: "#E8F5EE", color: "#0F6B3E", fontWeight: 600 } : { color: "#3A4A3A" }}>
-                <span className="text-[10px] text-[#6B7B6B] block">{String(i + 1).padStart(2, "0")}</span>
-                {lang === "de" ? s.labelDe : s.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Canvas */}
-          <div className="flex-1 flex flex-col items-center py-10 px-8 overflow-auto">
-            <div className="flex items-center gap-3 mb-8">
-              <button onClick={() => setDesktopIdx((i) => (i - 1 + DESKTOP_SCREENS.length) % DESKTOP_SCREENS.length)}
-                className="w-10 h-10 rounded-xl flex items-center justify-center bg-white" style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+        {/* Canvas */}
+        <main className="flex min-w-0 flex-1 items-start justify-center overflow-x-hidden px-2 py-6 sm:px-6 md:px-8 md:py-10">
+          <div className="flex w-full max-w-full flex-col items-center gap-5 md:gap-6">
+            <div className="flex w-full max-w-[520px] items-center justify-center gap-3 px-1">
+              <button onClick={() => tab === "mobile"
+                ? setMobileIdx((i) => (i - 1 + MOBILE_SCREENS.length) % MOBILE_SCREENS.length)
+                : setDesktopIdx((i) => (i - 1 + DESKTOP_SCREENS.length) % DESKTOP_SCREENS.length)}
+                className="w-10 h-10 flex-shrink-0 rounded-xl flex items-center justify-center bg-white" style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
                 <ChevronLeft size={18} color="#1A2E1A" />
               </button>
-              <span className="text-sm font-semibold text-[#1A2E1A]">
-                {lang === "de" ? DESKTOP_SCREENS[desktopIdx].labelDe : DESKTOP_SCREENS[desktopIdx].label}
+              <span className="min-w-0 flex-1 text-center text-sm font-semibold text-[#1A2E1A]">
+                {activeTitle}
               </span>
-              <button onClick={() => setDesktopIdx((i) => (i + 1) % DESKTOP_SCREENS.length)}
-                className="w-10 h-10 rounded-xl flex items-center justify-center bg-white" style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+              <button onClick={() => tab === "mobile"
+                ? setMobileIdx((i) => (i + 1) % MOBILE_SCREENS.length)
+                : setDesktopIdx((i) => (i + 1) % DESKTOP_SCREENS.length)}
+                className="w-10 h-10 flex-shrink-0 rounded-xl flex items-center justify-center bg-white" style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
                 <ChevronRight size={18} color="#1A2E1A" />
               </button>
             </div>
 
-            <div style={{ transform: "scale(0.72)", transformOrigin: "top center", marginBottom: -240 }}>
-              {desktopScreen()}
-            </div>
+            {tab === "mobile" ? (
+              <div className="ui-kit-phone-preview">
+                <div className="ui-kit-phone-preview-inner">{mobileScreen()}</div>
+              </div>
+            ) : (
+              <div className="ui-kit-desktop-preview-wrap">
+                <div className="ui-kit-desktop-preview">{desktopScreen()}</div>
+              </div>
+            )}
 
-            <div className="flex gap-2 flex-wrap justify-center mt-8">
-              {DESKTOP_SCREENS.map((s, i) => (
-                <button key={s.id} onClick={() => setDesktopIdx(i)}
-                  className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
-                  style={desktopIdx === i ? { background: "#0F6B3E", color: "#fff" } : { background: "#fff", color: "#6B7B6B", boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}>
+            <div className="flex max-w-2xl flex-wrap justify-center gap-2 px-2">
+              {activeScreens.map((s, i) => (
+                <button key={s.id} onClick={() => selectScreen(i)}
+                  className={`${tab === "mobile" ? "px-3 py-1.5 text-[11px]" : "px-4 py-2 text-sm"} rounded-lg font-medium transition-all`}
+                  style={activeIdx === i ? { background: "#0F6B3E", color: "#fff" } : { background: "#fff", color: "#6B7B6B", boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}>
                   {i + 1}. {lang === "de" ? s.labelDe : s.label}
                 </button>
               ))}
             </div>
           </div>
-        </div>
-      )}
+        </main>
+      </div>
     </div>
   );
 }
